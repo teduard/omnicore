@@ -1,7 +1,7 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 //import { BrowserRouter, Routes, Route, 
-import {BrowserRouter, RouterProvider,createBrowserRouter  } from "react-router-dom";
+import {BrowserRouter, RouterProvider,createBrowserRouter, createHashRouter  } from "react-router-dom";
 import './index.css'
 // import App from './App.tsx'
 // import ExpenseDashboard from './apps/ExpenseApp/ExpenseDashboard.tsx';
@@ -16,7 +16,15 @@ import './index.css'
 
 import {AppRoutes} from './routes/index.tsx';
 
+const params = new URLSearchParams(window.location.search);
+const redirect = params.get("redirect");
+
+if (redirect) {
+  window.history.replaceState(null, "", redirect);
+}
+
 const router = createBrowserRouter(AppRoutes,
+//const router = createHashRouter(AppRoutes, // for github pages
   {
     basename: import.meta.env.BASE_URL
   }

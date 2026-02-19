@@ -1,6 +1,6 @@
 import {Dashboard, Profile, Preferences, Documentation} from '../apps/Dashboard/';
 
-const teamRouteIndex = '/dashboard';
+const teamRouteIndex = '/omnicore/dashboard';
 
 const AppRoutes = [
     {

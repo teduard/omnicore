@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <script>
+      // Redirect all 404s to index.html
+      var path = window.location.pathname;
+      window.location.replace(
+        window.location.origin +
+          "/omnicore/?redirect=" +
+          encodeURIComponent(path)
+      );
+    </script>
+  </head>
+  <body></body>
+</html>

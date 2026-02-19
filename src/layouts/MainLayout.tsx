@@ -62,8 +62,8 @@ const i18nStrings = {
 };
 
 const profileActions = [
-  { id: 'profile', text: 'Profile', href: '/dashboard/profile' },
-  { id: 'preferences', text: 'Preferences', href: "/dashboard/preferences" },
+  { id: 'profile', text: 'Profile', href: '/omnicore/dashboard/profile' },
+  { id: 'preferences', text: 'Preferences', href: "/omnicore/dashboard/preferences" },
   {
     id: 'support-group',
     text: 'Support',
@@ -184,7 +184,7 @@ function MainLayout ( props:IMainLayoutProps ) {
           className="custom-main-header"
           i18nStrings={i18nStrings}
           identity={{
-            href: '/',
+            href: '/omnicore/',
             title: 'OmniCore',
             logo: { src: logo, alt: 'OmniCore' },
           }}
@@ -192,13 +192,13 @@ function MainLayout ( props:IMainLayoutProps ) {
             {
           type: "button",
           text: "Dashboard",
-          href: "/dashboard",
+          href: "/omnicore/dashboard",
           //externalIconAriaLabel: " (opens in a new tab)"
         },
         {
           type: "button",
           text: "Blog",
-          href: "/blog",
+          href: "/omnicore/blog",
           //external: true,
           //externalIconAriaLabel: " (opens in a new tab)"
         },

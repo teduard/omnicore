@@ -56,8 +56,8 @@ const signedOutProfileActions = [
 ];
 
 const profileActions = [
-  { id: 'profile', text: 'Profile', href: '/dashboard/profile' },
-  { id: 'preferences', text: 'Preferences', href: "/dashboard/preferences" },
+  { id: 'profile', text: 'Profile', href: '/omnicore/dashboard/profile' },
+  { id: 'preferences', text: 'Preferences', href: "/omnicore/dashboard/preferences" },
   {
     id: 'support-group',
     text: 'Support',
@@ -140,19 +140,19 @@ function LandingPageLayout(props: ILandingPageLayoutProps) {
           {
             type: "button",
             text: "Dashboard",
-            href: "/dashboard",
+            href: "/omnicore/dashboard",
             externalIconAriaLabel: " (opens in a new tab)"
           },
           {
             type: "button",
             text: "About",
-            href: "/about",
+            href: "/omnicore/about",
             externalIconAriaLabel: " (opens in a new tab)"
           },
           {
             type: "button",
             text: "Blog",
-            href: "/blog",
+            href: "/omnicore/blog",
             //external: true,
             externalIconAriaLabel: " (opens in a new tab)"
           },
