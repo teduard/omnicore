@@ -1,0 +1,43 @@
+import { StrictMode } from 'react'
+import { createRoot } from 'react-dom/client'
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import './index.css'
+import App from './App.tsx'
+import ExpenseDashboard from './apps/ExpenseApp/ExpenseDashboard.tsx';
+import WebShot from './components/WebShot.tsx';
+import ExpenseAdd from './apps/ExpenseApp/ExpenseAdd.tsx';
+import OrganizationDashboard from './apps/Organization/OrganizationDashboard.tsx';
+import ExpenseCostExplorer from './apps/ExpenseApp/layout/ExpenseCostExplorer.tsx';
+import OrganizationMembers from './apps/Organization/OrganizationMembers.tsx';
+import OrganizationApplications from './apps/Organization/OrganizationApplications.tsx';
+import SQL from './SQL.tsx';
+//import ExpenseCostExplorer from './ExpenseApp/layout/ExpenseCostExplorer.tsx';
+
+createRoot(document.getElementById('root')!).render(
+  <StrictMode>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/sql" element={<SQL />} />
+
+        <Route path="/webshot" element={<WebShot />} />
+        <Route path="/dashboard" element={<OrganizationApplications/>} />
+
+        <Route path="/expense">
+          <Route index element={<ExpenseDashboard/>} />
+          <Route path="cost" element={<ExpenseCostExplorer/>} />
+          <Route path="add" element={<ExpenseAdd/>} />
+        </Route>
+
+        <Route path="/organization">
+          <Route index element={<OrganizationDashboard />} />
+          <Route path="members" element={<OrganizationMembers />} />
+          <Route path="applications" element={<OrganizationApplications />} />
+        </Route>
+
+        <Route path="/" element={<App />} />
+      </Routes>
+    </BrowserRouter>
+    {/* <App /> */}
+  </StrictMode>,
+)
+
