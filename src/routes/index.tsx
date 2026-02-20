@@ -12,6 +12,7 @@ import Blog from '../Blog'
 import Login from '../Login'
 import Docs from '../Docs'
 import SQL from '../SQL'
+import RPDF from '../RPDF'
 
 const AppRoutes = [
     {
@@ -34,10 +35,16 @@ const AppRoutes = [
         path: '/docs',
         element: <Docs />
     },
+
     {
         path: '/sql',
         element: <SQL />
     },
+    {
+        path: '/pdf',
+        element: <RPDF />
+    },
+
     ...ExpenseRoutes.routes,
     ...TeamRoutes.routes,
     ...DashboardRoutes.routes,

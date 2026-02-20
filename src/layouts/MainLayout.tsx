@@ -164,8 +164,13 @@ function MainLayout ( props:IMainLayoutProps ) {
     // Handle navigation programmatically
     //navigate("/your-path");
 
-    console.log("btn clicked: ", event.detail.href);
+    console.log("a btn clicked: ", event);
     //console.log(event);
+
+    if(!event.detail.href) {
+      navigate("/");
+    }
+
     navigate(event.detail.href);
   };
 

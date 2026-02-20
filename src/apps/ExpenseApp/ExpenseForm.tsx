@@ -48,7 +48,7 @@ const [flashbarItems, setFlashbarItems] = React.useState([
 
   const currentDate:Date = new Date();
 
-  const [value, setValue] = React.useState(currentDate.getFullYear() + "-" + (currentDate.getMonth()+1) + "-" + currentDate.getDate());
+  const [value, setValue] = React.useState(currentDate.getFullYear() + "-" + (currentDate.getMonth() < 9 ? ("0"+(currentDate.getMonth()+1)): (currentDate.getMonth()+1)) + "-" + currentDate.getDate());
   const [checked, setChecked] = React.useState(false);
   const [
     selectedOption,

@@ -15,6 +15,7 @@ import './index.css'
 //import ExpenseCostExplorer from './ExpenseApp/layout/ExpenseCostExplorer.tsx';
 
 import {AppRoutes} from './routes/index.tsx';
+import { DatabaseProvider } from './db/hooks/DatabaseContext.tsx';
 
 const params = new URLSearchParams(window.location.search);
 const redirect = params.get("redirect");
@@ -32,7 +33,9 @@ const router = createBrowserRouter(AppRoutes,
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
+      <DatabaseProvider>
       <RouterProvider router={router} />
+      </DatabaseProvider>
     {/* <BrowserRouter>
       <Routes>
         <Route path="/sql" element={<SQL />} />

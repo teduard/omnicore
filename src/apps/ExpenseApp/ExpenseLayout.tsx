@@ -56,11 +56,12 @@ function Navigation() {
               type: "section-group",
               title: "Your Expenses",
               items: [
-                { type: 'link', text: `Summary`, href: ExpenseRoutes.path },
-                { type: 'link', text: `All expenses`, href: `${ExpenseRoutes.path}/cost` },
-                { type: 'link', text: `All LOCAL expenses`, href: `${ExpenseRoutes.path}/local` },
-                { type: 'link', text: `Add LOCAL expense`, href: `${ExpenseRoutes.path}/addlocal` },
-                { type: 'link', text: `Add expense`, href: `${ExpenseRoutes.path}/add` },
+                //{ type: 'link', text: `Summary`, href: ExpenseRoutes.path },
+                { type: 'link', text: `Summary`, href: ExpenseRoutes.path  },
+                //{ type: 'link', text: `All expenses`, href: `${ExpenseRoutes.path}/cost` },
+                { type: 'link', text: `All expenses`, href: `${ExpenseRoutes.path}/costlocal` },
+                { type: 'link', text: `Add expense`, href: `${ExpenseRoutes.path}/addlocal` },
+               // { type: 'link', text: `Add expense`, href: `${ExpenseRoutes.path}/add` },
               ]
             },
             { type: "divider" },
@@ -86,13 +87,6 @@ function Navigation() {
         />
         </>
 }
-
-// function OrganizationSplitPanel() {
-//     return <SplitPanel header={"Organization help"}>
-//                  <h2>Organization</h2>
-//                  <Spinner size="large" />
-//            </SplitPanel>
-// }
 
 function ExpenseLayout(props: IExpenseLayoutProps) {
   const [searchValue,setSearchValue] = React.useState("");

@@ -68,8 +68,11 @@ function LandingPageLayout(props: ILandingPageLayoutProps) {
     // Handle navigation programmatically
     //navigate("/your-path");
 
-    console.log("btn clicked: ", event.detail.href);
+    console.log("xbtn clicked: ", event.detail.href);
     //console.log(event);
+    if(!event.detail.href) {
+      navigate("/");
+    }
     navigate(event.detail.href);
   };
 
@@ -163,7 +166,7 @@ const profileActions = [
           
           identity={{
             href: '/',
-            title: 'OmniCoreABCD',
+            title: 'OmniCore',
             logo: { src: logo, alt: 'OmniCore' },
             //onFollow: {clickHandler}
             onFollow: handleNavigationClick

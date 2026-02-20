@@ -4,13 +4,13 @@ import FormField from "@cloudscape-design/components/form-field";
 import { Button, Grid, Icon } from "@cloudscape-design/components";
 
 import { useExpenseStore } from "../hooks";
-
+ 
 interface IMonthPickerProps {
   onRefresh: () => void
 }
 
 function MonthPicker (props: IMonthPickerProps) {
-  const [value, setValue] = React.useState("");
+  //const [value, setValue] = React.useState("");
 
   const {selectedDate, updateDate} = useExpenseStore()
 
@@ -26,8 +26,8 @@ function MonthPicker (props: IMonthPickerProps) {
                   { colspan: { default: 6 } },       
                 ]}>
       <DatePicker
-        onChange={({ detail }) => {setValue(detail.value); updateDate(detail.value);}}
-        value={value}
+        onChange={({ detail }) => { updateDate(detail.value);}}
+        value={selectedDate}
         isDateEnabled={date => date <= new Date()}
         openCalendarAriaLabel={selectedDate =>
           "Choose month" +

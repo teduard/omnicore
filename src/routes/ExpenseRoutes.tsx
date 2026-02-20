@@ -1,15 +1,20 @@
 import {ExpenseDashboard, ExpenseAdd, ExpenseCategories} from '../apps/ExpenseApp/';
 import ExpenseAddLocal from '../apps/ExpenseApp/ExpenseAddLocal';
 import ExpenseCategoriesAdd from '../apps/ExpenseApp/ExpenseCategoriesAdd';
+import ExpenseDashboardLocal from '../apps/ExpenseApp/ExpenseDashboardLocal';
 import ExpenseCostExplorerTable from '../apps/ExpenseApp/layout/ExpenseCostExplorer';
 import ExpenseCostExplorerLocal from '../apps/ExpenseApp/layout/ExpenseCostExplorerLocal';
 
 const appRoute = '/dashboard/expense';
 
 const AppRoutes = [
+    // {
+    // path: appRoute,
+    // element: <ExpenseDashboard />
+    // },
     {
-    path: appRoute,
-    element: <ExpenseDashboard />
+    path: `${appRoute}`,
+    element: <ExpenseDashboardLocal />
     },
     {
     path: `${appRoute}/add`,
@@ -24,7 +29,7 @@ const AppRoutes = [
     element: <ExpenseCostExplorerTable />
     },
     {
-    path: `${appRoute}/local`,
+    path: `${appRoute}/costlocal`,
     element: <ExpenseCostExplorerLocal />
     },
     {
