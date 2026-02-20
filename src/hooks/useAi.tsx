@@ -19,13 +19,14 @@ console.log('❌ But attempting to create a pipeline fails: ');
 // })();
 
 
-(async function load () {
-  const pipe = await pipeline('sentiment-analysis', 'Xenova/all-MiniLM-L6-v2');
-  console.log("pipe", pipe);
+//works
+// (async function load () {
+//   const pipe = await pipeline('sentiment-analysis', 'Xenova/all-MiniLM-L6-v2');
+//   console.log("pipe", pipe);
 
-  window.embedder = pipe;
-  return pipe;
-})();
+//   window.embedder = pipe;
+//   return pipe;
+// })();
 
 function useAi() { 
   const [pipeline, setPipeline] = useState<object>();
