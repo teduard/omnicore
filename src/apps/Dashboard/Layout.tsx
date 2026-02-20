@@ -45,7 +45,13 @@ function Navigation() {
               // 3. Let React Router handle the URL change
               
               console.log("event.detail.href = ", event.detail.href)
-              navigate(event.detail.href);
+              
+              // console.log("new URL(import.meta.url).pathname ", new URL(import.meta.url).origin)
+              console.log("final:", new URL(import.meta.url).origin + event.detail.href)
+
+              const finalHref = event.detail.href.replace(import.meta.env.BASE_URL, '');
+
+              navigate(finalHref);
             }
           }}
           header={{
@@ -56,24 +62,24 @@ function Navigation() {
             { 
                 type: 'link', 
                 text: `Summary`, 
-                href: DashboardRoutes.path 
+                href: import.meta.env.BASE_URL + DashboardRoutes.path 
             },
             {
                 type: "link",
                 text: "Your profile",
-                href: `${DashboardRoutes.path}/profile`,
+                href: import.meta.env.BASE_URL + `${DashboardRoutes.path}/profile`,
                 //info: <Badge color="green">2</Badge>
             },
             { 
                 type: 'link', 
                 text: `Preferences`, 
-                href: `${DashboardRoutes.path}/preferences` 
+                href: import.meta.env.BASE_URL + `${DashboardRoutes.path}/preferences` 
             },
             { type: "divider" },
             { 
                 type: 'link', 
                 text: `Enable Ollama`, 
-                href: `${DashboardRoutes.path}/ollama` 
+                href: import.meta.env.BASE_URL + `${DashboardRoutes.path}/ollama` 
             },
           ]}
         />
