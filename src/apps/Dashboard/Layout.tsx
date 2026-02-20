@@ -43,6 +43,8 @@ function Navigation() {
               // 2. Stop the browser from reloading the page
               event.preventDefault();
               // 3. Let React Router handle the URL change
+              
+              console.log("event.detail.href = ", event.detail.href)
               navigate(event.detail.href);
             }
           }}

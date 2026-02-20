@@ -50,10 +50,10 @@ function Content() {
         Data:{JSON.stringify(data)}
     </>
 }
-
+import { useNavigate } from "react-router-dom";
 function AppContent() {
     const imgs = [expenseLogo, fitnessLogo, taskifyLogo, teamLogo, systemLogo];
-
+const navigate = useNavigate();
     return (
       <>
         <Cards
@@ -64,7 +64,19 @@ function AppContent() {
       //selectionType="single"
       cardDefinition={{
         header: item => (
-          <Link href={item.href} fontSize="heading-m">
+          <Link href={item.href} fontSize="heading-m"
+            onFollow={(event) => {
+            // 1. Check if it's an internal link
+            if (!event.detail.external) {
+              // 2. Stop the browser from reloading the page
+              event.preventDefault();
+              // 3. Let React Router handle the URL change
+              
+              console.log("event.detail.href = ", event.detail.href)
+              navigate(event.detail.href);
+            }
+          }}
+          >
             {item.name}
           </Link>
         ),
@@ -110,7 +122,7 @@ function AppContent() {
           type: "1",
           size: "Small",
           notes: "development in progress",
-          href: FitnessRoutes.path
+          href:  FitnessRoutes.path
         },
         {
           name: "Taskifier",
@@ -144,7 +156,18 @@ function AppContent() {
       }}
       cardDefinition={{
         header: item => (
-          <Link href={item.href} fontSize="heading-m">
+          <Link href={item.href} fontSize="heading-m"
+          onFollow={(event) => {
+            // 1. Check if it's an internal link
+            if (!event.detail.external) {
+              // 2. Stop the browser from reloading the page
+              event.preventDefault();
+              // 3. Let React Router handle the URL change
+              
+              console.log("event.detail.href = ", event.detail.href)
+              navigate(event.detail.href);
+            }
+          }}>
             {item.name}
           </Link>
         ),

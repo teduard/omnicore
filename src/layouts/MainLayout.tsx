@@ -61,26 +61,7 @@ const i18nStrings = {
   overflowMenuDismissIconAriaLabel: 'Close menu',
 };
 
-const profileActions = [
-  { id: 'profile', text: 'Profile', href: '/omnicore/dashboard/profile' },
-  { id: 'preferences', text: 'Preferences', href: "/omnicore/dashboard/preferences" },
-  {
-    id: 'support-group',
-    text: 'Support',
-    items: [
-      {
-        id: 'documentation',
-        text: 'Documentation',
-        href: '/docs',
-        //external: true,
-        //externalIconAriaLabel: ' (opens in new tab)',
-      },
-      // { id: 'feedback', text: 'Feedback', href: '#', external: true, externalIconAriaLabel: ' (opens in new tab)' },
-      // { id: 'support', text: 'Customer support' },
-    ],
-  },
-  { id: 'signout', text: 'Sign out', href: 'http://localhost:9080/api/logout' },
-];
+
 
 
 function Content() {
@@ -173,6 +154,51 @@ function Content() {
 function MainLayout ( props:IMainLayoutProps ) {
   const [toolsOpen, setToolsOpen] = useState(false);
   const headerVariant = 'divider';
+  const navigate = useNavigate();
+
+   const handleNavigationClick = (event) => {
+    // Prevent default link behavior
+    event.preventDefault();
+    event.stopPropagation();
+    
+    // Handle navigation programmatically
+    //navigate("/your-path");
+
+    console.log("btn clicked: ", event.detail.href);
+    //console.log(event);
+    navigate(event.detail.href);
+  };
+
+  const profileActions = [
+  { 
+    id: 'profile', 
+    text: 'Profile', 
+    href: import.meta.env.BASE_URL + '/dashboard/profile',
+    onClick: handleNavigationClick
+   },
+  { id: 'preferences', 
+    text: 'Preferences', 
+    href: import.meta.env.BASE_URL + "/dashboard/preferences",
+    onClick: handleNavigationClick
+   },
+  {
+    id: 'support-group',
+    text: 'Support',
+    items: [
+      {
+        id: 'documentation',
+        text: 'Documentation',
+        href: import.meta.env.BASE_URL + '/docs',
+        onClick: handleNavigationClick
+        //external: true,
+        //externalIconAriaLabel: ' (opens in new tab)',
+      },
+      // { id: 'feedback', text: 'Feedback', href: '#', external: true, externalIconAriaLabel: ' (opens in new tab)' },
+      // { id: 'support', text: 'Customer support' },
+    ],
+  },
+  { id: 'signout', text: 'Sign out', href: 'http://localhost:9080/api/logout',onClick: handleNavigationClick },
+];
 
   return (
     <>
@@ -184,21 +210,24 @@ function MainLayout ( props:IMainLayoutProps ) {
           className="custom-main-header"
           i18nStrings={i18nStrings}
           identity={{
-            href: '/omnicore/',
+            href: '/',
             title: 'OmniCore',
             logo: { src: logo, alt: 'OmniCore' },
+            onFollow: handleNavigationClick
           }}
           utilities={[
             {
           type: "button",
           text: "Dashboard",
-          href: "/omnicore/dashboard",
+          href: "/dashboard",
+          onClick: handleNavigationClick
           //externalIconAriaLabel: " (opens in a new tab)"
         },
         {
           type: "button",
           text: "Blog",
-          href: "/omnicore/blog",
+          href: "/blog",
+          onClick: handleNavigationClick
           //external: true,
           //externalIconAriaLabel: " (opens in a new tab)"
         },

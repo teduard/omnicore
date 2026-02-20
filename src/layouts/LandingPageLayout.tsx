@@ -55,6 +55,24 @@ const signedOutProfileActions = [
   { id: 'sign-in-with-google', text: 'Sign In with Google', href: '#'},
 ];
 
+
+
+function LandingPageLayout(props: ILandingPageLayoutProps) {
+  const navigate = useNavigate();
+
+  const handleNavigationClick = (event) => {
+    // Prevent default link behavior
+    event.preventDefault();
+    event.stopPropagation();
+    
+    // Handle navigation programmatically
+    //navigate("/your-path");
+
+    console.log("btn clicked: ", event.detail.href);
+    //console.log(event);
+    navigate(event.detail.href);
+  };
+
 const profileActions = [
   { id: 'profile', text: 'Profile', href: '/omnicore/dashboard/profile' },
   { id: 'preferences', text: 'Preferences', href: "/omnicore/dashboard/preferences" },
@@ -73,11 +91,8 @@ const profileActions = [
       // { id: 'support', text: 'Customer support' },
     ],
   },
-  { id: 'signout', text: 'Sign out', href: 'http://localhost:9080/api/logout' },
+  { id: 'signout', text: 'Sign out', href: 'http://localhost:9080/api/logout',onClick: handleNavigationClick },
 ];
-
-function LandingPageLayout(props: ILandingPageLayoutProps) {
-  const navigate = useNavigate();
 
   const cookies:any = document.cookie.split(';').reduce(
         (cookies:any, cookie:any) => {
@@ -97,7 +112,13 @@ function LandingPageLayout(props: ILandingPageLayoutProps) {
   }
 
   const [userData, setUserData] = useState(
-    { type: 'button', iconName: 'user-profile', title: 'Account', ariaLabel: 'Account', href: '/login' },
+   { type: 'button', 
+          iconName: 'user-profile', 
+          title: 'Account', 
+          ariaLabel: 'Account', 
+          href: '/login',
+          onClick: handleNavigationClick
+        },
   );
 
   const headerVariant = 'divider';
@@ -118,12 +139,20 @@ function LandingPageLayout(props: ILandingPageLayoutProps) {
       console.log("not auth");
       setUserData(
         
-        { type: 'button', iconName: 'user-profile', title: 'Account', ariaLabel: 'Account', href: '/login' },
+        { type: 'button', 
+          iconName: 'user-profile', 
+          title: 'Account', 
+          ariaLabel: 'Account', 
+          href: '/login',
+          onClick: handleNavigationClick
+        },
 
       )
     }
   },
   [SessionInitiated]);
+
+
 
   return (
     <>
@@ -131,30 +160,32 @@ function LandingPageLayout(props: ILandingPageLayoutProps) {
     <DemoHeaderPortal>
         <TopNavigation
           i18nStrings={i18nStrings}
+          
           identity={{
             href: '/',
-            title: 'OmniCore',
+            title: 'OmniCoreABCD',
             logo: { src: logo, alt: 'OmniCore' },
+            //onFollow: {clickHandler}
+            onFollow: handleNavigationClick
           }}
           utilities={[
           {
             type: "button",
             text: "Dashboard",
-            href: "/omnicore/dashboard",
-            externalIconAriaLabel: " (opens in a new tab)"
+            href: "/dashboard",
+            onClick: handleNavigationClick
           },
           {
             type: "button",
             text: "About",
-            href: "/omnicore/about",
-            externalIconAriaLabel: " (opens in a new tab)"
+            href: "/about",
+            onClick: handleNavigationClick
           },
           {
             type: "button",
             text: "Blog",
-            href: "/omnicore/blog",
-            //external: true,
-            externalIconAriaLabel: " (opens in a new tab)"
+            href: "/blog",
+            onClick: handleNavigationClick
           },
           { type: 'button', 
             iconName: 'settings', 
