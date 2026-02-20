@@ -26,7 +26,7 @@ function Breadcrumbs() {
 function Tools() {
     return <HelpPanel header={<h2>Your Organization</h2>}>
         Detail about your organization
-        <br/><br/>
+        
         it's members and other details
         </HelpPanel>
 }
@@ -78,9 +78,20 @@ function Navigation() {
             { type: "divider" },
             { 
                 type: 'link', 
-                text: `Enable Ollama`, 
-                href: import.meta.env.BASE_URL + `${DashboardRoutes.path}/ollama` 
+                text: `System settings`, 
+                href: import.meta.env.BASE_URL + `${DashboardRoutes.path}/system` 
             },
+            { 
+                type: 'link', 
+                text: `Your team`, 
+                href: import.meta.env.BASE_URL + `${DashboardRoutes.path}/team` 
+            },
+            // { type: "divider" },
+            // { 
+            //     type: 'link', 
+            //     text: `Enable Ollama`, 
+            //     href: import.meta.env.BASE_URL + `${DashboardRoutes.path}/ollama` 
+            // },
           ]}
         />
         </>

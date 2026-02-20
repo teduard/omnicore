@@ -268,7 +268,7 @@ function MainLayout ( props:IMainLayoutProps ) {
                         headerVariant={headerVariant}
                         //header={props.header}
                         defaultPadding={true}
-                        maxContentWidth={1000}
+                        maxContentWidth={1400}
                         disableOverlap={true}
                       >       
                     <main className="product-page-content">

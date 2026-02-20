@@ -90,7 +90,7 @@ function Content(props:any) {
         headerVariant={headerVariant}
         header={<HeroHeader />}
         defaultPadding={true}
-        maxContentWidth={1000}
+        maxContentWidth={1400}
         disableOverlap={true}
       >
         {props.children}

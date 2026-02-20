@@ -1,30 +1,43 @@
-import { pipeline, env } from "@xenova/transformers";
+// import { pipeline, env } from "@xenova/transformers";
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-let embedder: any;
+// // eslint-disable-next-line @typescript-eslint/no-explicit-any
+// let embedder: any;
 
-env.allowLocalModels = false;
-env.useBrowserCache = true;
 
-//env.allowRemoteModels = false;
+// const isActive:boolean = false;
 
-await initEmbedder();
+// env.allowLocalModels = false;
+// env.useBrowserCache = true;
 
-export async function initEmbedder() {
-//  env.allowLocalModels = true;
-//env.useBrowserCache = true;
+// //env.allowRemoteModels = false;
 
-  embedder = await pipeline(
-    "feature-extraction",
-    "Xenova/all-MiniLM-L6-v2"
-  );
-}
+// await initEmbedder();
+
+// export async function initEmbedder() {
+// //  env.allowLocalModels = true;
+// //env.useBrowserCache = true;
+//   if(isActive)
+//   embedder = await pipeline(
+//     "feature-extraction",
+//     "Xenova/all-MiniLM-L6-v2"
+//   );
+// }
+
+// export async function embed(text: string): Promise<Float32Array> {
+//   if(isActive) {
+//   const output = await embedder(text, {
+//     pooling: "mean",
+//     normalize: true
+//   });
+
+//   return output.data;
+//   }
+
+//   return new Float32Array();
+// }
+
 
 export async function embed(text: string): Promise<Float32Array> {
-  const output = await embedder(text, {
-    pooling: "mean",
-    normalize: true
-  });
-
-  return output.data;
+  
+  return new Float32Array();
 }

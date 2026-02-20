@@ -13,6 +13,7 @@ import Login from '../Login'
 import Docs from '../Docs'
 import SQL from '../SQL'
 import RPDF from '../RPDF'
+import WebLLM from '../WebLLM'
 
 const AppRoutes = [
     {
@@ -41,8 +42,8 @@ const AppRoutes = [
         element: <SQL />
     },
     {
-        path: '/pdf',
-        element: <RPDF />
+        path: '/webllm',
+        element: <WebLLM />
     },
 
     ...ExpenseRoutes.routes,

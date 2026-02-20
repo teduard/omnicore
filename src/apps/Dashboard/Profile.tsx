@@ -1,4 +1,4 @@
-import { BreadcrumbGroup} from '@cloudscape-design/components';
+import { BreadcrumbGroup, Container, Header, KeyValuePairs, StatusIndicator} from '@cloudscape-design/components';
 // import { MainLayout } from '../../layouts';
 
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
@@ -23,18 +23,84 @@ import {DashboardRoutes} from '../../routes'
 
 const queryClient = new QueryClient()
 
+function GeneralConfig() {
+  return <>
+  <Container header={<Header variant="h2">General configuration</Header>}>
+    <KeyValuePairs
+      columns={1}
+      items={[
+        {
+          label: 'First Name',
+          value: 'John',
+        },
+        {
+          label: 'Last Name',
+          value: 'Doe',
+        },
+        {
+          label: 'Email',
+          value: 'john.doe@gmail.com',
+        },
+        {
+          label: 'Password',
+          value: 'None',
+        },
+        {
+          label: '',
+          value: <Button>Save</Button>,
+        },
+      ]}
+    />
+  </Container>
+  </>
+}
+
+function ResetPassword() {
+  return <>
+  <Container header={<Header variant="h2">Reset password</Header>}>
+    <KeyValuePairs
+      columns={1}
+      items={[
+        {
+          label: 'Password',
+          value: 'None',
+        },
+        {
+          label: 'Confirm Password',
+          value: 'None',
+        },
+        {
+          label: '',
+          value: <Button>Save</Button>,
+        },
+      ]}
+    />
+  </Container>
+  </>
+}
 
 function AppContent() {
     return (
-      <Box
-          margin={{ vertical: "xs" }}
-          textAlign="center"
-          color="inherit"
-        >
-          <SpaceBetween size="m">
-            <b>Your profile</b>
+      <SpaceBetween size="m">
+            <Header
+              variant="h1"
+              actions={
+                <SpaceBetween direction="horizontal" size="xs">
+                  {/* <Button variant='primary'>
+                                Save profile
+                              </Button> */}
+                </SpaceBetween>
+              }
+              >
+              Your profile
+            </Header>
+  
+          <SpaceBetween direction="vertical" size="l">
+            <GeneralConfig/>
+            <ResetPassword/>
+            
           </SpaceBetween>
-        </Box>
+      </SpaceBetween>
     )
 }
 

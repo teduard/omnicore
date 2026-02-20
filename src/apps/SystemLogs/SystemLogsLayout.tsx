@@ -83,6 +83,7 @@ function SystemLogsLayout(props: IOrganizationLayoutProps) {
                 
                 tools = { <Tools />}
                 toolsHide={true}
+                search={false}
                 
                 navigation = { <Navigation />}
                 splitPanel = {false} //{ <OrganizationSplitPanel /> }

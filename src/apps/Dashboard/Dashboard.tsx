@@ -45,12 +45,12 @@ function Content() {
         <h1>Organization Applications</h1>
         {isPending && <span>Loading...</span>}
         {error && <span>Error</span>}
-            <br/>
 
         Data:{JSON.stringify(data)}
     </>
 }
 import { useNavigate } from "react-router-dom";
+
 function AppContent() {
     const imgs = [expenseLogo, fitnessLogo, taskifyLogo, teamLogo, systemLogo];
 const navigate = useNavigate();
@@ -149,7 +149,7 @@ const navigate = useNavigate();
       }
       header={<Header>Your applications</Header>}
     />
-      <Cards
+      {false && <Cards
       ariaLabels={{
         itemSelectionLabel: (e, t) => `select ${t.name}`,
         selectionGroupLabel: "Item selection"
@@ -223,7 +223,7 @@ const navigate = useNavigate();
         </Box>
       }
       header={<Header>Admin</Header>}
-    />
+    />}
     </>
     )
 }
@@ -244,7 +244,18 @@ function Dashboard() {
     return <>
         <QueryClientProvider client={queryClient}>
             <Layout
-                content={ <AppContent /> }
+                content={ <>                
+                  {/* <Box
+          margin={{ vertical: "l" }}
+          textAlign="left"
+          color="inherit"
+        >
+          <SpaceBetween size="m">
+            <h1 className="greeting">Hello, John</h1>
+          </SpaceBetween>
+        </Box> */}
+                  <h1 className="greeting">Welcome, John</h1>
+                 <AppContent /> </> }
                 breadcrumbs = { <Breadcrumbs /> }
             />
         </QueryClientProvider>
