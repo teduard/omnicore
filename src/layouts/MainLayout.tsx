@@ -290,6 +290,7 @@ function MainLayout ( props:IMainLayoutProps ) {
         stickyNotifications
         contentType="table"
         breadcrumbs={props.breadcrumbs}
+        maxContentWidth={1400}
         content={
 
              <SpaceBetween size="m">
