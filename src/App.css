@@ -14,3 +14,9 @@
     /* margin: 16px 0px 8px; */
 
 }
+
+.preferencesTitle {
+  color: red;
+  border-bottom: 1px solid yellow;
+}
+

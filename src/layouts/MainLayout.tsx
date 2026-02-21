@@ -35,6 +35,8 @@ import '../styles/top-navigation.scss';
 import { applyMode, applyDensity, Density, Mode } from '@cloudscape-design/global-styles';
 import { type Theme, applyTheme } from '@cloudscape-design/components/theming';
 import {type IMainLayoutProps} from "./interfaces";
+import StickyFooter from "../components/StickyFooter";
+import { GearPopover, type Preferences } from "../components/Preferences";
 
 const LOCALE = 'en';
 
@@ -152,6 +154,15 @@ function Content() {
 }
 
 function MainLayout ( props:IMainLayoutProps ) {
+    const [prefs, setPrefs] = useState<Preferences>({
+        appearance: "light",
+        //directionality: "ltr",
+        density: "comfortable",
+      });
+          const handleChange = (next: Partial<Preferences>) =>
+      setPrefs((prev) => ({ ...prev, ...next }));
+  
+
   const [toolsOpen, setToolsOpen] = useState(false);
   const headerVariant = 'divider';
   const navigate = useNavigate();
@@ -230,6 +241,14 @@ function MainLayout ( props:IMainLayoutProps ) {
         },
         {
           type: "button",
+          text: "About",
+          href: "/blog",
+          onClick: handleNavigationClick
+          //external: true,
+          //externalIconAriaLabel: " (opens in a new tab)"
+        },
+        {
+          type: "button",
           text: "Blog",
           href: "/blog",
           onClick: handleNavigationClick
@@ -246,11 +265,18 @@ function MainLayout ( props:IMainLayoutProps ) {
               badge: true,
               disableUtilityCollapse: true,
             },
-            { type: 'button', iconName: 'settings', title: 'Settings', ariaLabel: 'Settings' },
+            // { type: 'button', iconName: 'settings', title: 'Settings', ariaLabel: 'Settings' },
+            {
+                        type: "button",
+                        // Render our Popover-wrapped gear button by hijacking `text`.
+                        // For a production app prefer the `element` type (see note).
+                        text: <GearPopover prefs={prefs} onChange={handleChange} /> as any,
+                        ariaLabel: "Preferences",
+                      },
             {
               type: 'menu-dropdown',
               text: 'Admin',
-              description: 'admin@gmail.com',
+              description: 'john.doe@gmail.com',
               iconName: 'user-profile',
               items: profileActions,
             },
@@ -259,23 +285,29 @@ function MainLayout ( props:IMainLayoutProps ) {
       </DemoHeaderPortal>
 
       <AppLayoutToolbar
+        footerSelector="#app-footer"
         headerSelector="#h"
         stickyNotifications
         contentType="table"
         breadcrumbs={props.breadcrumbs}
         content={
-          <ContentLayout
-                        headerVariant={headerVariant}
-                        //header={props.header}
-                        defaultPadding={true}
-                        maxContentWidth={1400}
-                        disableOverlap={true}
-                      >       
-                    <main className="product-page-content">
-                      <br/>
-                      {props.content}  
-                    </main>
-                 </ContentLayout>
+
+             <SpaceBetween size="m">
+              {/* <DashboardHeader actions={<Button variant="primary">Launch instance</Button>} /> */}
+              {props.content}
+            </SpaceBetween>
+
+          // <ContentLayout
+          //               headerVariant={headerVariant}
+          //               //header={props.header}
+          //               defaultPadding={true}
+          //               maxContentWidth={1400}
+          //               disableOverlap={true}
+          //             >       
+                   
+          //             {props.content}  
+                    
+          //        </ContentLayout>
         }
         toolsOpen={toolsOpen}
         onToolsChange={({ detail }) => setToolsOpen(detail.open)}
@@ -287,6 +319,8 @@ function MainLayout ( props:IMainLayoutProps ) {
         
         navigation={<>{props.navigation}</>}
       />
+
+      <StickyFooter />
       </I18nProvider>
     </>    
   )

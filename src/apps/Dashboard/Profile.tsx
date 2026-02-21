@@ -41,6 +41,14 @@ function GeneralConfig() {
           label: 'Email',
           value: 'john.doe@gmail.com',
         },
+         {
+          label: 'City/Town',
+          value: 'Doe',
+        },
+          {
+          label: 'Phone number',
+          value: '(213) 555-1234',
+        },
         {
           label: 'Password',
           value: 'None',

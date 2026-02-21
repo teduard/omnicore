@@ -81,11 +81,11 @@ function Navigation() {
                 text: `System settings`, 
                 href: import.meta.env.BASE_URL + `${DashboardRoutes.path}/system` 
             },
-            { 
-                type: 'link', 
-                text: `Your team`, 
-                href: import.meta.env.BASE_URL + `${DashboardRoutes.path}/team` 
-            },
+            // { 
+            //     type: 'link', 
+            //     text: `Your team`, 
+            //     href: import.meta.env.BASE_URL + `${DashboardRoutes.path}/team` 
+            // },
             // { type: "divider" },
             // { 
             //     type: 'link', 

@@ -1,4 +1,4 @@
-import { /*Link,*/ useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import logo from '/assets/logo.png'
 
 import {useEffect} from 'react';
@@ -10,7 +10,13 @@ import { createPortal } from 'react-dom';
 import "tailwindcss";
 
 import {
+  Box,
+  Button,
   ContentLayout,
+  Popover,
+  RadioGroup,
+  SpaceBetween,
+  Link,
 } from '@cloudscape-design/components';
 
 import { I18nProvider } from '@cloudscape-design/components/i18n';
@@ -26,6 +32,8 @@ import GoogleLoginButton from "../components/GoogleLoginButton";
 import { useBearStore } from '../hooks'
 import RelatedProducts from "../components/RelatedProducts";
 import type { ILandingPageLayoutProps } from "./interfaces";
+import StickyFooter from '../components/StickyFooter';
+import { GearPopover, type Preferences } from "../components/Preferences";
 
 const LOCALE = 'en';
 
@@ -54,6 +62,44 @@ const i18nStrings = {
 const signedOutProfileActions = [
   { id: 'sign-in-with-google', text: 'Sign In with Google', href: '#'},
 ];
+
+
+
+const FOOTER_HEIGHT = 100; // px — adjust to match your footer's actual height
+
+
+function XStickyFooter() {
+  return (
+    <footer
+      style={{
+        background: 'rgba(10,10,10,0.2)',
+        position: "fixed",
+        bottom: 0,
+        left: 0,
+        right: 0,
+        height: FOOTER_HEIGHT,
+        zIndex: 1000,
+        //backgroundColor: "var(--color-background-container-content)",
+        //borderTop: "1px solid var(--color-border-divider-default)",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        gap: "24px",
+        padding: "0 24px",
+      }}
+    >
+      <Link href="/about" variant="secondary">About</Link>
+      <Link href="/privacy" variant="secondary" external>Privacy</Link>
+      <Link href="/terms" variant="secondary" external>Site terms</Link>
+      
+      <Box color="text-body-secondary" fontSize="body-s">
+        © 2026, OmniCore
+      </Box>
+    </footer>
+  );
+}
+
+
 
 
 
@@ -155,7 +201,15 @@ const profileActions = [
   },
   [SessionInitiated]);
 
-
+  const [prefs, setPrefs] = useState<Preferences>({
+      appearance: "light",
+      //directionality: "ltr",
+      density: "comfortable",
+    });
+  
+    const handleChange = (next: Partial<Preferences>) =>
+      setPrefs((prev) => ({ ...prev, ...next }));
+  
 
   return (
     <>
@@ -190,10 +244,17 @@ const profileActions = [
             href: "/blog",
             onClick: handleNavigationClick
           },
-          { type: 'button', 
-            iconName: 'settings', 
-            title: 'Settings', 
-            ariaLabel: 'Settings' 
+          // { type: 'button', 
+          //   iconName: 'settings', 
+          //   title: 'Settings', 
+          //   ariaLabel: 'Settings' 
+          // },
+          {
+            type: "button",
+            // Render our Popover-wrapped gear button by hijacking `text`.
+            // For a production app prefer the `element` type (see note).
+            text: <GearPopover prefs={prefs} onChange={handleChange} /> as any,
+            ariaLabel: "Preferences",
           },
             userData
           ]}
@@ -212,7 +273,7 @@ const profileActions = [
           </main>
        </ContentLayout>
                 
-      <DemoFooterPortal>
+      {/* <DemoFooterPortal>
         <TopNavigation
           i18nStrings={i18nStrings}
           identity={{
@@ -221,7 +282,10 @@ const profileActions = [
           }}
           >
           </TopNavigation>
-      </DemoFooterPortal>
+      </DemoFooterPortal> */}
+
+      {/* <XStickyFooter /> */}
+      <StickyFooter />
 
       </I18nProvider>
     </>

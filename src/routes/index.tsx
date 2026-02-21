@@ -14,6 +14,7 @@ import Docs from '../Docs'
 import SQL from '../SQL'
 import RPDF from '../RPDF'
 import WebLLM from '../WebLLM'
+import Pop from '../Pop'
 
 const AppRoutes = [
     {
@@ -36,7 +37,10 @@ const AppRoutes = [
         path: '/docs',
         element: <Docs />
     },
-
+    {
+        path: '/pop',
+        element: <Pop />
+    },
     {
         path: '/sql',
         element: <SQL />

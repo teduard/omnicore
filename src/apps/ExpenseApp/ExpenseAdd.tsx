@@ -241,7 +241,7 @@ function _ExpenseAdd() {
             {
               type: 'menu-dropdown',
               text: 'Admin',
-              description: 'admin@gmail.com',
+              description: 'john.doe@gmail.com',
               iconName: 'user-profile',
               items: profileActions,
             },

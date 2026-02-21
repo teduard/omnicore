@@ -14,7 +14,7 @@ function Login() {
         content={
           <>
           <LoginForm />
-          <GoogleLoginButton />
+          {/* <GoogleLoginButton /> */}
           </>
         }
         header={false}

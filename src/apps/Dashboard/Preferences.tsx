@@ -1,4 +1,4 @@
-import { BreadcrumbGroup} from '@cloudscape-design/components';
+import { BreadcrumbGroup, Button, Container, Header, KeyValuePairs} from '@cloudscape-design/components';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import Layout from './Layout';
 
@@ -10,17 +10,56 @@ import {DashboardRoutes} from '../../routes'
 const queryClient = new QueryClient()
 
 
+function GeneralConfig() {
+  return <>
+  <Container 
+    //header={<Header variant="h2">Preferences</Header>}
+  >
+    <KeyValuePairs
+      columns={1}
+      items={[
+        {
+          label: 'Currency',
+          value: 'RON',
+        },
+        {
+          label: 'Default theme',
+          value: 'dark/light',
+        },
+        {
+          label: 'Layout density',
+          value: 'compact/normal',
+        },
+        {
+          label: '',
+          value: <Button>Save</Button>,
+        },
+      ]}
+    />
+  </Container>
+  </>
+}
+
 function AppContent() {
     return (
-      <Box
-          margin={{ vertical: "xs" }}
-          textAlign="center"
-          color="inherit"
-        >
-          <SpaceBetween size="m">
-            <b>Preferences</b>
+      <SpaceBetween size="m">
+            <Header
+              variant="h1"
+              actions={
+                <SpaceBetween direction="horizontal" size="xs">
+                  {/* <Button variant='primary'>
+                                Save profile
+                              </Button> */}
+                </SpaceBetween>
+              }
+              >
+              Preferences
+            </Header>
+  
+          <SpaceBetween direction="vertical" size="l">
+            <GeneralConfig/>
           </SpaceBetween>
-        </Box>
+      </SpaceBetween>
     )
 }
 
