@@ -79,7 +79,7 @@ define(['./workbox-5a5d9309'], (function (workbox) { 'use strict';
    */
   workbox.precacheAndRoute([{
     "url": "index.html",
-    "revision": "3a428313d52be0baecc47e00e440c5d8"
+    "revision": "3b9b62b836914ebf5739d841dc4671a5"
   }, {
     "url": "404.html",
     "revision": "3d58dfedc54bf05a23d2c31f458dd246"
@@ -87,98 +87,95 @@ define(['./workbox-5a5d9309'], (function (workbox) { 'use strict';
     "url": "assets/workbox-window.prod.es5-BIl4cyR9.js",
     "revision": null
   }, {
-    "url": "assets/use-select-CXt4Hxf9.js",
-    "revision": null
-  }, {
-    "url": "assets/use-select-0B8g2LyH.css",
+    "url": "assets/webllm-l0sNRNKZ.js",
     "revision": null
   }, {
     "url": "assets/sql-wasm-CbWyWKgW.wasm",
     "revision": null
   }, {
+    "url": "assets/internal-DxlDOgS-.js",
+    "revision": null
+  }, {
     "url": "assets/internal-DfANjbid.css",
     "revision": null
   }, {
-    "url": "assets/internal-DE55izoe.js",
+    "url": "assets/index-uu3zVhp3.css",
     "revision": null
   }, {
     "url": "assets/index-LtbZklMj.css",
     "revision": null
   }, {
-    "url": "assets/index-F5UThSM1.css",
+    "url": "assets/index-Dm13pMsY.js",
     "revision": null
   }, {
-    "url": "assets/index-Dr71qtgF.js",
+    "url": "assets/index-DgmgMkRH.js",
     "revision": null
   }, {
-    "url": "assets/index-DqgGLxui.js",
+    "url": "assets/index-DVwEdowm.js",
     "revision": null
   }, {
-    "url": "assets/index-D8B1jnCO.js",
-    "revision": null
-  }, {
-    "url": "assets/index-CBN3L8Vk.js",
+    "url": "assets/index-CGHGoRGm.js",
     "revision": null
   }, {
     "url": "assets/index-Bh1snd4x.css",
     "revision": null
   }, {
-    "url": "assets/index-BHZ_Gn1G.css",
+    "url": "assets/index-BH-jVFMI.js",
     "revision": null
   }, {
-    "url": "assets/highcharts-more-BMDETmFe.js",
+    "url": "assets/highcharts-more-U_VGJpwz.js",
     "revision": null
   }, {
-    "url": "assets/highcharts-DsuzHGBW.js",
+    "url": "assets/highcharts-D2ADY7-e.js",
     "revision": null
   }, {
-    "url": "assets/accessibility-CI4Vbdfl.js",
+    "url": "assets/accessibility-nunJxXlp.js",
     "revision": null
   }, {
-    "url": "assets/SystemSettings-mFwK6E6O.js",
+    "url": "assets/SystemSettings-CAsL05dy.js",
     "revision": null
   }, {
-    "url": "assets/MonthPicker-BoRRPHh1.js",
+    "url": "assets/MonthPicker-B6LjpLo2.js",
     "revision": null
   }, {
     "url": "assets/MonthPicker-3tFKCjB0.css",
     "revision": null
   }, {
-    "url": "assets/ExpenseLayout-C0x2LxDL.js",
+    "url": "assets/ExpenseLayout-CWXf47gE.js",
+    "revision": null
+  }, {
+    "url": "assets/ExpenseDashboardLocal-DrgrIXbO.js",
     "revision": null
   }, {
     "url": "assets/ExpenseDashboardLocal-CKsLCq0O.css",
     "revision": null
   }, {
-    "url": "assets/ExpenseDashboardLocal-BP43f0m4.js",
+    "url": "assets/ExpenseCostExplorerTable-Da64BOF4.js",
     "revision": null
   }, {
-    "url": "assets/ExpenseCostExplorerTable-Cxa7-z3U.js",
+    "url": "assets/ExpenseCostExplorerLocal-De0fphsS.js",
     "revision": null
   }, {
-    "url": "assets/ExpenseCostExplorerLocal-BsVSHrUe.js",
+    "url": "assets/ExpenseCostExplorer-B7l28nBP.js",
     "revision": null
   }, {
-    "url": "assets/ExpenseCostExplorer-BB8WsknY.js",
+    "url": "assets/ExpenseCategoriesAdd-BX4ETLub.js",
     "revision": null
   }, {
-    "url": "assets/ExpenseCategoriesAdd-teu8DdgQ.js",
+    "url": "assets/ExpenseCategories-BLChi7JI.js",
     "revision": null
   }, {
-    "url": "assets/ExpenseCategories-BvkOP_6G.js",
+    "url": "assets/ExpenseAddLocal-NioSjdjA.js",
     "revision": null
   }, {
-    "url": "assets/ExpenseAddLocal-BoE4j1kL.js",
-    "revision": null
-  }, {
-    "url": "assets/ExpenseAdd-D1pqzgRb.js",
+    "url": "assets/ExpenseAdd-COavYGOy.js",
     "revision": null
   }, {
     "url": "favicon.ico",
     "revision": "cf3942ed10df780bec4ff4b58eab5277"
   }, {
     "url": "manifest.webmanifest",
-    "revision": "70c218a26cd0a590824cd45c0e894529"
+    "revision": "c3c4afe017c508da8076846eca5b0e55"
   }], {});
   workbox.cleanupOutdatedCaches();
   workbox.registerRoute(new workbox.NavigationRoute(workbox.createHandlerBoundToURL("index.html")));

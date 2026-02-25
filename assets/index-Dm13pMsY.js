@@ -1,0 +1,1 @@
+import{f as t,R as r,n as l}from"./index-BH-jVFMI.js";import{C as d}from"./internal-DxlDOgS-.js";function m({locale:n="",isDateEnabled:s=()=>!0,granularity:a="day",...e}){const o=t("Calendar",{props:{granularity:a},metadata:{hasDisabledReasons:!!e.dateDisabledReason}});return r.createElement(d,{...e,...o,locale:n,isDateEnabled:s,granularity:a})}l(m,"Calendar");export{m as C};
