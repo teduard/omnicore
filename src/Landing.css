@@ -1,0 +1,29 @@
+.product-cards-list {
+  padding: 0;
+}
+.product-cards-list-item {
+  list-style: none;
+}
+
+.greeting {
+  background: linear-gradient(
+      50deg,
+      rgb(52, 107, 241) 33.06%,
+      rgb(49, 134, 255) 48.67%,
+      rgb(79, 160, 255) 65.69%
+    )
+    text;
+  color: transparent;
+  display: inline-block;
+  font-weight: 600;
+  line-height: 2rem;
+}
+
+.preferencesTitle {
+  color: red;
+  border-bottom: 1px solid yellow;
+}
+
+.product-page-content {
+  padding-top: 30px;
+}

@@ -1,0 +1,38 @@
+.copyright {
+  margin: 0 auto;
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  background-color: #ccc;
+}
+
+/* footer {
+  margin-top: 300px;
+  border-top: 1px solid #ccc;
+  margin: 0 auto;
+  background: #eef;
+  bottom: 0px;
+  display: block;
+} */
+
+footer {
+    align-items: center;
+    background-color: #206b84;
+    bottom: 0;
+    display: flex;
+    font-family: var(--font-family-base-gmnpzl,"Open Sans","Helvetica Neue",Roboto,Arial,sans-serif);
+    font-size: 14px;
+    gap: 10px;
+    inset-block-end: 0;
+    inset-inline-end: 0;
+    inset-inline-start: 0;
+    justify-content: space-between;
+    margin: 0;
+    /* min-block-size: 40px;
+    padding-block:10px;
+    padding-inline:40px; */
+    position: fixed;
+    z-index: 2000;
+    width: 100%;
+    margin: 0 auto;
+}
