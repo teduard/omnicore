@@ -184,7 +184,7 @@ group by c.category_id
                 <Button
                   variant="primary"
                   onClick={() =>
-                    navigate(`${ExpenseRoutes.path}/categories/add`)
+                    navigate(`/${ExpenseRoutes.path}/categories/add`)
                   }
                 >
                   Add category

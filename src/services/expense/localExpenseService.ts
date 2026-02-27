@@ -84,7 +84,7 @@ const createLocalExpenseService = (db): IExpenseService => ({
   },
 
  addExpense: async (payload) => {  
-    const res = execute(db.db, 
+    execute(db.db, 
       `INSERT INTO Expenses
          (category_id, user_id, amount, comment,
           could_have_been_avoided, created_date, updated_date)
@@ -99,12 +99,41 @@ const createLocalExpenseService = (db): IExpenseService => ({
       ]
     );
 
-      console.log("calling db.persist")
     db.persist();
-  }
+  },
 
-  //   updateExpense: async (payload) => {
-  //   }
+  updateExpense: async (payload) => {
+   execute(db.db, 
+      `UPDATE Expenses
+        set 
+        category_id = ?,
+        amount = ?,
+        comment = ?
+        create_date = ?
+        could_have_been_avoided = ?`, 
+        // needs the update_date to be now
+      [
+        payload.categoryId,
+        payload.amount,
+        payload.comment,
+        payload.date,
+        payload.couldHaveBeenAvoided ? 1 : 0,
+        payload.date,
+      ]
+    );
+
+    db.persist();
+  },
+
+  deleteExpense: async (expenseId) => {
+    execute(db.db, 
+      `DELETE FROM Expenses WHERE expense_id = ?`,
+      [
+        expenseId
+      ]
+    );
+    db.persist();
+  },
 
   /*
 deleteExpense: async (expenseId) => {

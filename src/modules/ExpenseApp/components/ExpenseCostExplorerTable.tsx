@@ -6,20 +6,47 @@ import Header from "@cloudscape-design/components/header";
 import Link from "@cloudscape-design/components/link";
 
 import type { IExpenseTableData, IExpenseRow } from "../interfaces/data";
-import { Icon } from "@cloudscape-design/components";
+import { ButtonDropdown, Icon } from "@cloudscape-design/components";
 import MonthPicker from "../../../components/MonthPicker";
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import { UserContext } from "../../../contexts/UserContext";
 import { logger } from "../../../lib/logger";
+
+import { type NonCancelableCustomEvent } from "@cloudscape-design/components";
+
+interface DropdownDetail {
+  id: string;
+}
 
 function ExpenseCostExplorerTable(props: IExpenseTableData) {
   const userContext = useContext(UserContext);
   const {defaultCurrency} = userContext;
 
+  const [selectedItems, setSelectedItems] = useState([]);
 
   useEffect(() => {
     logger.debug("props.LoadingStatus= ", props.LoadingStatus);
   }, [props.LoadingStatus]);
+
+  const handleDropdownClick = (event: NonCancelableCustomEvent<DropdownDetail>) => {
+      console.info(event);
+      const actionId = event.detail.id;
+  
+      switch (actionId) {
+        case "edit":
+          logger.debug("edit expense: ", selectedItems);
+          break;
+        case "delete":
+          logger.debug("delete expense: ", selectedItems);
+          // execute(
+          //   `DELETE FROM Categories where category_id = '${selectedItems[0].category_id}'`,
+          // );
+          // fetchCat();
+          break;
+        default:
+          break;
+      }
+    };
 
   return (
     <Table
@@ -33,7 +60,24 @@ function ExpenseCostExplorerTable(props: IExpenseTableData) {
       }) =>
         `Displaying items ${firstIndex} to ${lastIndex} of ${totalItemsCount}`
       }
+      columnDisplay={[
+        { id: "expenseId", visible: false },
+        { id: "entryDate", visible: true },
+        { id: "amount", visible: true },
+        { id: "category", visible: true },
+        { id: "comment", visible: true },
+        { id: "avoidable", visible: true },
+      ]}
       columnDefinitions={[
+        {
+          id: "expenseId",
+          header: "expenseId",
+          cell: (item:IExpenseRow) => (
+           item.expenseId 
+          ),
+          sortingField: "name",
+          isRowHeader: true
+        },
         {
           id: "entryDate",
           header: "Entry Date",
@@ -65,9 +109,15 @@ function ExpenseCostExplorerTable(props: IExpenseTableData) {
           cell: item => (item.couldHaveBeenAvoided ? <Icon name="status-warning" /> : "")
         }
       ]}
+      selectedItems={selectedItems}
+      onSelectionChange={({ detail }) =>
+          setSelectedItems(detail.selectedItems)
+        }
       enableKeyboardNavigation
       items={props.expenseData}
       sortingDisabled
+      selectionType="single"
+      trackBy="expenseId"
       stripedRows
       stickyHeader
       empty={
@@ -90,14 +140,27 @@ function ExpenseCostExplorerTable(props: IExpenseTableData) {
               direction="horizontal"
               size="xs"
             >
+              <ButtonDropdown
+                  onItemClick={handleDropdownClick}
+                  items={[
+                    {
+                      text: "Edit",
+                      id: "edit",
+                      disabled: false,
+                    },
+                    {
+                      text: "Delete",
+                      id: "delete",
+                      disabled: false,
+                    },
+                  ]}
+                >
+                  Actions
+                </ButtonDropdown>
               <MonthPicker onRefresh={function (): void {
                 logger.debug("mnth picker")
                 props.onMonthChange()
-                //logger.debug(props)
               } }/>
-              {/* <Button variant="primary">
-                <Icon name="refresh" />
-              </Button>  */}
             </SpaceBetween>
           }
           >
@@ -105,11 +168,6 @@ function ExpenseCostExplorerTable(props: IExpenseTableData) {
           Your Expenses
 
           </Header>}
-    //   footer={ <Box textAlign="center">
-    //   <Link href="#" variant="primary">
-    //     View all expenses
-    //   </Link>
-    // </Box>}
     />
   );
 }

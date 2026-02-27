@@ -8,7 +8,7 @@ import { createLocalExpenseService } from "../services/expense/localExpenseServi
 
 type DataSource = "local" | "remote";
 
-interface DataSourceContextValue {
+export interface DataSourceContextValue {
   service: IExpenseService;
   source: DataSource;
   setSource: (source: DataSource) => void;

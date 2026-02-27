@@ -9,6 +9,14 @@ export const createRemoteExpenseService = (baseUrl: string): IExpenseService => 
   },
 
   addExpense: async (_payload) => {
-   
+    throw new Error("addExpense not implemented");
+  },
+
+  updateExpense: async (_payload) => {
+    throw new Error("updateExpense not implemented");
+  },
+
+  deleteExpense: async (_expenseId) => {
+    throw new Error("deleteExpense not implemented");
   }
 });
