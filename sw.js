@@ -79,7 +79,7 @@ define(['./workbox-5a5d9309'], (function (workbox) { 'use strict';
    */
   workbox.precacheAndRoute([{
     "url": "index.html",
-    "revision": "f39ffff75f8cf685b4ae3829639fcd6a"
+    "revision": "ae1abdf9e621c90463f4af6b9a21c93c"
   }, {
     "url": "404.html",
     "revision": "3d58dfedc54bf05a23d2c31f458dd246"
@@ -90,7 +90,7 @@ define(['./workbox-5a5d9309'], (function (workbox) { 'use strict';
     "url": "assets/webllm-l0sNRNKZ.js",
     "revision": null
   }, {
-    "url": "assets/use-select-DpWPcQzn.js",
+    "url": "assets/use-select-CLHQpZfY.js",
     "revision": null
   }, {
     "url": "assets/use-select-0B8g2LyH.css",
@@ -102,79 +102,79 @@ define(['./workbox-5a5d9309'], (function (workbox) { 'use strict';
     "url": "assets/internal-DfANjbid.css",
     "revision": null
   }, {
-    "url": "assets/internal-DeMV-7eK.js",
+    "url": "assets/internal-CbUTSLOm.js",
     "revision": null
   }, {
-    "url": "assets/index-oq0V42Dd.js",
+    "url": "assets/index-MfXRJadI.js",
     "revision": null
   }, {
     "url": "assets/index-LtbZklMj.css",
     "revision": null
   }, {
-    "url": "assets/index-DhoDqbO4.js",
+    "url": "assets/index-DjKSESmR.js",
     "revision": null
   }, {
-    "url": "assets/index-DFzylMm4.js",
-    "revision": null
-  }, {
-    "url": "assets/index-BP9afvzn.css",
+    "url": "assets/index-CPvD-bK6.js",
     "revision": null
   }, {
     "url": "assets/index-BHZ_Gn1G.css",
     "revision": null
   }, {
-    "url": "assets/highcharts-more-DPmQGyCg.js",
+    "url": "assets/index-5_HoX4TX.css",
     "revision": null
   }, {
-    "url": "assets/highcharts-C-x4gMRA.js",
+    "url": "assets/highcharts-more-B4mmjTKn.js",
     "revision": null
   }, {
-    "url": "assets/accessibility-8mGUXek7.js",
+    "url": "assets/highcharts-CazWdIuI.js",
     "revision": null
   }, {
-    "url": "assets/SystemSettings-CCbngYxk.js",
+    "url": "assets/accessibility-BQWpcnE9.js",
     "revision": null
   }, {
-    "url": "assets/Profile-CZmBBmNU.js",
+    "url": "assets/SystemSettings-B9jGbgzV.js",
     "revision": null
   }, {
-    "url": "assets/Preferences-B2-EiM8O.js",
+    "url": "assets/Profile-CCRDS7wi.js",
     "revision": null
   }, {
-    "url": "assets/MonthPicker-C_oCAVXN.js",
+    "url": "assets/Preferences-Dq9mHkLT.js",
+    "revision": null
+  }, {
+    "url": "assets/MonthPicker-shddjNMa.js",
     "revision": null
   }, {
     "url": "assets/MonthPicker-3tFKCjB0.css",
     "revision": null
   }, {
-    "url": "assets/Layout-CBhNRllj.js",
+    "url": "assets/Layout-d4LsaCk8.js",
     "revision": null
   }, {
-    "url": "assets/ExpenseLayout-BUpx8lid.js",
+    "url": "assets/ExpenseLayout-dR5Mub-Z.js",
     "revision": null
   }, {
-    "url": "assets/ExpenseDashboard-DNcHMf8s.js",
+    "url": "assets/ExpenseDashboard-DX7mZIad.js",
     "revision": null
   }, {
     "url": "assets/ExpenseDashboard-C-UjkKS6.css",
     "revision": null
   }, {
-    "url": "assets/ExpenseCostExplorerLocal-U405hVAE.js",
+    "url": "assets/ExpenseCostExplorer-DLZeTHCE.js",
     "revision": null
   }, {
-    "url": "assets/ExpenseCategoriesAdd-BxDqSdX5.js",
+    "url": "assets/ExpenseCategoriesAdd-DOLLXlOP.js",
     "revision": null
   }, {
-    "url": "assets/ExpenseCategories-Ba1sQOcg.js",
+    "url": "assets/ExpenseCategories-7Hpj51C5.js",
     "revision": null
   }, {
-    "url": "assets/ExpenseAdd-BlEm7cJ5.js",
+    "url": "assets/ExpenseAdd-Cgyoy9am.js",
     "revision": null
   }, {
-    "url": "assets/Documentation-DfK1000h.js",
+    "url": "assets/Documentation-B3qmHy1E.js",
     "revision": null
   }, {
-    "url": "assets/Dashboard-DzqhkryU.js",
+    "url": "assets/Dashboard-DFj_Dp2M.js",
     "revision": null
   }, {
     "url": "favicon.ico",
