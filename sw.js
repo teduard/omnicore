@@ -79,7 +79,7 @@ define(['./workbox-5a5d9309'], (function (workbox) { 'use strict';
    */
   workbox.precacheAndRoute([{
     "url": "index.html",
-    "revision": "cd4fba1071f0a72e8969a763b9a13fd4"
+    "revision": "2e7ec3df99a8154e15c6481e2f8fbd95"
   }, {
     "url": "404.html",
     "revision": "3d58dfedc54bf05a23d2c31f458dd246"
@@ -90,10 +90,10 @@ define(['./workbox-5a5d9309'], (function (workbox) { 'use strict';
     "url": "assets/webllm-l0sNRNKZ.js",
     "revision": null
   }, {
-    "url": "assets/useExpenses-DhiYojR-.js",
+    "url": "assets/useExpenses-COxiYyZi.js",
     "revision": null
   }, {
-    "url": "assets/use-select-uMRvy1pw.js",
+    "url": "assets/use-select-b3NgfctH.js",
     "revision": null
   }, {
     "url": "assets/use-select-0B8g2LyH.css",
@@ -102,19 +102,25 @@ define(['./workbox-5a5d9309'], (function (workbox) { 'use strict';
     "url": "assets/sql-wasm-CbWyWKgW.wasm",
     "revision": null
   }, {
-    "url": "assets/internal-TQe_kQuJ.js",
+    "url": "assets/internal-DfANjbid.css",
     "revision": null
   }, {
-    "url": "assets/internal-DfANjbid.css",
+    "url": "assets/internal-DXmJE_9T.js",
+    "revision": null
+  }, {
+    "url": "assets/index-wsLrhGX8.js",
+    "revision": null
+  }, {
+    "url": "assets/index-sbGZmitb.js",
     "revision": null
   }, {
     "url": "assets/index-LtbZklMj.css",
     "revision": null
   }, {
-    "url": "assets/index-Dsg1Nrxz.js",
+    "url": "assets/index-Dxp5wfc5.js",
     "revision": null
   }, {
-    "url": "assets/index-BgWbPDQM.js",
+    "url": "assets/index-C3RXUv3R.js",
     "revision": null
   }, {
     "url": "assets/index-BHZ_Gn1G.css",
@@ -123,61 +129,58 @@ define(['./workbox-5a5d9309'], (function (workbox) { 'use strict';
     "url": "assets/index-5_HoX4TX.css",
     "revision": null
   }, {
-    "url": "assets/index-3QJsMswP.js",
+    "url": "assets/highcharts-zsjp5egu.js",
     "revision": null
   }, {
-    "url": "assets/highcharts-more-CS6wkvbc.js",
+    "url": "assets/highcharts-more-oZopo2x7.js",
     "revision": null
   }, {
-    "url": "assets/highcharts-D-qSA7gY.js",
+    "url": "assets/accessibility-C7PGYP5x.js",
     "revision": null
   }, {
-    "url": "assets/accessibility-BBn-d802.js",
+    "url": "assets/SystemSettings-aaKlkdLS.js",
     "revision": null
   }, {
-    "url": "assets/SystemSettings-4t9_Yt_A.js",
+    "url": "assets/Profile-BTMflrez.js",
     "revision": null
   }, {
-    "url": "assets/Profile-f65ZNMyW.js",
+    "url": "assets/Preferences-TpoHJohJ.js",
     "revision": null
   }, {
-    "url": "assets/Preferences-DJveOwVB.js",
-    "revision": null
-  }, {
-    "url": "assets/MonthPicker-BZHOi9eR.js",
+    "url": "assets/MonthPicker-zNYVq-wH.js",
     "revision": null
   }, {
     "url": "assets/MonthPicker-3tFKCjB0.css",
     "revision": null
   }, {
-    "url": "assets/Layout-CDD8e7Fc.js",
+    "url": "assets/Layout-BPzwX8N8.js",
     "revision": null
   }, {
-    "url": "assets/ExpenseLayout-XqbknDPU.js",
-    "revision": null
-  }, {
-    "url": "assets/ExpenseDashboard-COJ-zoK5.js",
+    "url": "assets/ExpenseLayout-EktDzCz8.js",
     "revision": null
   }, {
     "url": "assets/ExpenseDashboard-C-UjkKS6.css",
     "revision": null
   }, {
-    "url": "assets/ExpenseCostExplorer-C_z1B2v8.js",
+    "url": "assets/ExpenseDashboard-BWRrofJV.js",
     "revision": null
   }, {
-    "url": "assets/ExpenseCategoriesAdd-bdmbDLf4.js",
+    "url": "assets/ExpenseCostExplorer-DSboSn-8.js",
     "revision": null
   }, {
-    "url": "assets/ExpenseCategories-CDWdlGUQ.js",
+    "url": "assets/ExpenseCategoriesAdd-JWEhX1y1.js",
     "revision": null
   }, {
-    "url": "assets/ExpenseAdd-BydbphX0.js",
+    "url": "assets/ExpenseCategories-BmZdJub8.js",
     "revision": null
   }, {
-    "url": "assets/Documentation-BcxwyP4s.js",
+    "url": "assets/ExpenseAdd-MQi0SXFN.js",
     "revision": null
   }, {
-    "url": "assets/Dashboard-DILNpz2q.js",
+    "url": "assets/Documentation-CXMNM3kI.js",
+    "revision": null
+  }, {
+    "url": "assets/Dashboard-Cqg16h8z.js",
     "revision": null
   }, {
     "url": "favicon.ico",
