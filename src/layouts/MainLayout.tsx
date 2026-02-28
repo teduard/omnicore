@@ -27,6 +27,7 @@ import { DashboardRoutes } from "../routes";
 import { AuthContext } from "../contexts/AuthContext";
 import LoadingSpinner from "../components/LoadingSpinner";
 import { logger } from "../lib/logger";
+import { DataSourceContext } from "../contexts/DataSourceContext";
 
 const LOCALE = "en";
 
@@ -46,44 +47,6 @@ const i18nStrings = {
   overflowMenuTitleText: "All",
   overflowMenuBackIconAriaLabel: "Back",
   overflowMenuDismissIconAriaLabel: "Close menu",
-};
-
-const handlePrefClick = (event, userContext) => {
-  const { setTheme, setDensity } = userContext;
-
-  event.preventDefault();
-  event.stopPropagation();
-
-  switch (event.detail.id) {
-    case "theme-light":
-      setTheme({ label: "Light", value: "light" });
-      break;
-    case "theme-dark":
-      setTheme({ label: "Dark", value: "dark" });
-      break;
-    case "layout-normal":
-      setDensity({ value: "normal", label: "Comfortable" });
-      break;
-    case "layout-compact":
-      setDensity({ value: "compact", label: "Compact" });
-      break;
-  }
-};
-
-const handleUserMenuClick = (event, authContext, navigate) => {
-  const { setIsAuthenticated, setUser } = authContext;
-
-  event.preventDefault();
-  event.stopPropagation();
-
-  if (event?.detail?.id == "signout") {
-    setIsAuthenticated(false);
-    setUser(null);
-  } else if (event?.detail?.id == "preferences") {
-    navigate(`/${DashboardRoutes.path}/preferences`);
-  } else if (event?.detail?.id == "profile") {
-    navigate(`/${DashboardRoutes.path}/profile`);
-  }
 };
 
 const emptyIcon = (
@@ -119,9 +82,14 @@ const checkedIcon = (
 );
 
 function MainLayout(props: IMainLayoutProps) {
+  const context = useContext(DataSourceContext);
+  const { preferencesService } = context;
+
+  //
+
   const navigate = useNavigate();
   const authContext = useContext(AuthContext);
-   if (!authContext) {
+  if (!authContext) {
     throw new Error("useAuth must be used within AuthProvider");
   }
   const { isAuthenticated, setIsAuthenticated, setUser } = authContext;
@@ -130,6 +98,73 @@ function MainLayout(props: IMainLayoutProps) {
   if (!userContext) {
     throw new Error("UserContext context is not present");
   }
+
+  const handlePrefClick = async (event, userContext) => {
+    const { setTheme, setDensity } = userContext;
+
+    event.preventDefault();
+    event.stopPropagation();
+
+    const userPref = await preferencesService.getPreferences();
+    logger.debug("userPref = ", userPref);
+
+    switch (event.detail.id) {
+      case "theme-light":
+        setTheme({ label: "Light", value: "light" });
+
+        preferencesService.updatePreferences({
+          preferencesId: userPref.preferencesId,
+          theme: "light",
+          layoutDensity: userPref.layoutDensity,
+          currency: userPref.currency,
+        });
+        break;
+      case "theme-dark":
+        setTheme({ label: "Dark", value: "dark" });
+
+        preferencesService.updatePreferences({
+          preferencesId: userPref.preferencesId,
+          theme: "dark",
+          layoutDensity: userPref.layoutDensity,
+          currency: userPref.currency,
+        });
+        break;
+      case "layout-normal":
+        setDensity({ value: "normal", label: "Comfortable" });
+        preferencesService.updatePreferences({
+          preferencesId: userPref.preferencesId,
+          theme: userPref.theme,
+          layoutDensity: "normal",
+          currency: userPref.currency,
+        });
+        break;
+      case "layout-compact":
+        setDensity({ value: "compact", label: "Compact" });
+        preferencesService.updatePreferences({
+          preferencesId: userPref.preferencesId,
+          theme: userPref.theme,
+          layoutDensity: "compact",
+          currency: userPref.currency,
+        });
+        break;
+    }
+  };
+
+  const handleUserMenuClick = (event, authContext, navigate) => {
+    const { setIsAuthenticated, setUser } = authContext;
+
+    event.preventDefault();
+    event.stopPropagation();
+
+    if (event?.detail?.id == "signout") {
+      setIsAuthenticated(false);
+      setUser(null);
+    } else if (event?.detail?.id == "preferences") {
+      navigate(`/${DashboardRoutes.path}/preferences`);
+    } else if (event?.detail?.id == "profile") {
+      navigate(`/${DashboardRoutes.path}/profile`);
+    }
+  };
 
   useEffect(() => {
     if (!isAuthenticated) {

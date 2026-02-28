@@ -9,6 +9,14 @@ export interface NewExpensePayload {
   couldHaveBeenAvoided: boolean;
 }
 
+export interface NewPreferencesPayload {
+  preferencesId: string;
+  userId: number;
+  theme: string;
+  layoutDensity: string;
+  currency: string;
+}
+
 export interface DeleteExpensePayload {
   expenseId: number;
 }
@@ -33,6 +41,6 @@ export interface IPreferences {
 }
 
 export interface IPreferencesService {
-  getPreferences(userId: number): Promise<IPreferences[]>;
-  updatePreferences(payload: IPreferences): Promise<void>;
+  getPreferences(): Promise<IPreferences | null>;
+  updatePreferences(payload: NewPreferencesPayload): Promise<void>;
 }

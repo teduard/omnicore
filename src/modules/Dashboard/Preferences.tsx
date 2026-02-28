@@ -17,6 +17,7 @@ import { DashboardRoutes } from "../../routes";
 import { UserContext } from "../../contexts/UserContext";
 import { useContext, useState } from "react";
 import AppBreadcrumbs from "../../components/AppBreadcrumbs";
+import { DataSourceContext } from "../../contexts/DataSourceContext";
 
 const queryClient = new QueryClient();
 
@@ -75,6 +76,9 @@ function GeneralConfig(props: IConfigFormProps) {
 }
 
 function GeneralConfigEditForm(props: IFormProps) {
+  const context = useContext(DataSourceContext);
+  const { preferencesService } = context;
+
   const userContext = useContext(UserContext);
   const {
     defaultTheme,
@@ -95,7 +99,16 @@ function GeneralConfigEditForm(props: IFormProps) {
     value: "normal",
   });
 
-  const saveHandler = () => {
+  const saveHandler = async () => {
+    const userPref = await preferencesService.getPreferences();
+
+    preferencesService.updatePreferences({
+      preferencesId: userPref.preferencesId,
+      theme: theme.value,
+      layoutDensity: density.value,
+      currency: currency.value,
+    });
+
     setDefaultTheme(theme);
     setDefaultDensity(density);
     setDefaultCurrency(currency);

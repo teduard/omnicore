@@ -18,6 +18,7 @@ import "../Landing.css";
 import "../styles/base.scss";
 import "../styles/top-navigation.scss";
 import { logger } from "../lib/logger";
+import { DataSourceContext } from "../contexts/DataSourceContext";
 
 const emptyIcon = (
   <Icon

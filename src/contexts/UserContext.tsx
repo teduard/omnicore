@@ -1,4 +1,10 @@
-import { createContext, useState, useEffect, type ReactNode } from "react";
+import {
+  createContext,
+  useState,
+  useEffect,
+  type ReactNode,
+  useContext,
+} from "react";
 import {
   applyDensity,
   applyMode,
@@ -6,6 +12,7 @@ import {
   Mode,
 } from "@cloudscape-design/global-styles";
 import { logger } from "../lib/logger";
+import { DataSourceContext } from "./DataSourceContext";
 
 const UserContext = createContext(null);
 
@@ -55,18 +62,40 @@ interface IUserProviderProps {
 }
 
 const UserProvider = ({ children }: IUserProviderProps) => {
-  const [defaultTheme, setDefaultTheme] = useState({
-    value: "light",
-    label: "Light",
-  });
-  const [defaultDensity, setDefaultDensity] = useState({
-    value: "normal",
-    label: "Comfortable",
-  });
-  const [defaultCurrency, setDefaultCurrency] = useState({
-    value: "EUR",
-    label: "Euro",
-  });
+  const localTheme = localStorage.getItem("SessionTheme");
+  const localCurrency = localStorage.getItem("SessionCurrency");
+  const localLayout = localStorage.getItem("SessionLayout");
+
+  const [defaultTheme, setDefaultTheme] = useState(
+    localTheme === "light"
+      ? {
+          value: "light",
+          label: "Light",
+        }
+      : {
+          value: "dark",
+          label: "Dark",
+        },
+  );
+  const [defaultDensity, setDefaultDensity] = useState(
+    localLayout === "normal"
+      ? {
+          value: "normal",
+          label: "Comfortable",
+        }
+      : {
+          value: "compact",
+          label: "Compact",
+        },
+  );
+  const [defaultCurrency, setDefaultCurrency] = useState(
+    localCurrency
+      ? JSON.parse(localCurrency)
+      : {
+          value: "EUR",
+          label: "Euro",
+        },
+  );
 
   const setTheme = (value: any) => {
     setDefaultTheme(value);
@@ -99,8 +128,10 @@ const UserProvider = ({ children }: IUserProviderProps) => {
   useEffect(() => {
     if (defaultTheme.value == "light") {
       applyMode(Mode.Light);
+      localStorage.setItem("SessionTheme", "light");
     } else {
       applyMode(Mode.Dark);
+      localStorage.setItem("SessionTheme", "dark");
     }
   }, [defaultTheme]);
 
@@ -109,8 +140,10 @@ const UserProvider = ({ children }: IUserProviderProps) => {
   useEffect(() => {
     if (defaultDensity.value == "normal") {
       applyDensity(Density.Comfortable);
+      localStorage.setItem("SessionLayout", "normal");
     } else {
       applyDensity(Density.Compact);
+      localStorage.setItem("SessionLayout", "compact");
     }
   }, [defaultDensity]);
 
@@ -119,6 +152,7 @@ const UserProvider = ({ children }: IUserProviderProps) => {
     // and to localStorage
     logger.debug("currency has changed in userContext");
     logger.debug(defaultCurrency);
+    localStorage.setItem("SessionCurrency", JSON.stringify(defaultCurrency));
   }, [defaultCurrency]);
 
   const value = {
