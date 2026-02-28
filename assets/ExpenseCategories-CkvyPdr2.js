@@ -1,4 +1,4 @@
-import{r,d as C,a as _,u as v,j as e,H as E,S as m,B as d,E as n,e as I,f as A,l as g,A as D,D as $}from"./index-B5h-64n8.js";import{E as B}from"./ExpenseLayout-CmQ90yTE.js";import{T as k}from"./index-DtL_rSmH.js";import{B as L}from"./index-C2wDvPn0.js";function S(){const l=r.useContext(C);if(!l)throw new Error("useAuth must be used within AuthProvider");const{user:p}=l,{execute:u,isReady:x}=_(),h=v(),b=[],[o,f]=r.useState(b),c=()=>{const t=new Array,s=u(`
+import{r,d as C,a as _,u as v,j as e,H as E,S as m,B as d,E as n,e as I,f as A,l as g,A as D,D as $}from"./index-D5ZTpl4d.js";import{E as B}from"./ExpenseLayout-DuAMmXcG.js";import{T as k}from"./index-3FKO_Zwj.js";import{B as L}from"./index-CuQtlZcn.js";function S(){const l=r.useContext(C);if(!l)throw new Error("useAuth must be used within AuthProvider");const{user:p}=l,{execute:u,isReady:x}=_(),h=v(),b=[],[o,f]=r.useState(b),c=()=>{const t=new Array,s=u(`
        select c.*, count(e.expense_id) as expense_count from Categories c
 left join Expenses e
 on c.user_id = e.user_id and c.category_id = e.category_id

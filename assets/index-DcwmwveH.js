@@ -1,1 +1,0 @@
-import{O as t,R as r,U as l}from"./index-B5h-64n8.js";import{C as d}from"./useExpenses-C5VqX26q.js";function m({locale:s="",isDateEnabled:n=()=>!0,granularity:a="day",...e}){const o=t("Calendar",{props:{granularity:a},metadata:{hasDisabledReasons:!!e.dateDisabledReason}});return r.createElement(d,{...e,...o,locale:s,isDateEnabled:n,granularity:a})}l(m,"Calendar");export{m as C};
