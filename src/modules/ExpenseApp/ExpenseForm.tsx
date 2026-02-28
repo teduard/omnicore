@@ -147,7 +147,6 @@ function ExpenseFormLocal() {
               </Button>
             </SpaceBetween>
           }
-          // header={<Header variant="h1">Add New Expense</Header>}
         >
           <Container header={<Header variant="h2">New expense</Header>}>
             <SpaceBetween direction="vertical" size="l">
@@ -158,7 +157,6 @@ function ExpenseFormLocal() {
                   onChange={handleAmount}
                   placeholder="0"
                 />
-                {/* <input type="number" onChange={handleAmount} value={fieldAmount}/> */}
               </FormField>
               <FormField label="Category">
                 <Select
@@ -168,18 +166,6 @@ function ExpenseFormLocal() {
                   }
                   options={
                     categories
-                    //   [
-                    //   { label: "Clothes", value: "1" },
-                    //   { label: "Electronics", value: "2" },
-                    //   { label: "Food", value: "3" },
-                    //   { label: "House", value: "4" },
-                    //   { label: "Misc", value: "5" },
-                    //   { label: "Out", value: "6" },
-                    //   { label: "Personal Care", value: "7" },
-                    //   { label: "Transport", value: "8" },
-                    //   { label: "TransportCar", value: "9" },
-                    //   { label: "TranaportCarFuel", value: "10" },
-                    // ]
                   }
                 />
               </FormField>
@@ -195,11 +181,6 @@ function ExpenseFormLocal() {
                 </Toggle>
               </FormField>
               <FormField label="Entry Date">
-                {/* <DateInput
-                onChange={({ detail }) => setValue(detail.value)}
-                value={value}
-                placeholder="YYYY/MM/DD"
-              /> */}
                 <Calendar
                   onChange={({ detail }) => {
                     logger.debug("calendar:", detail);

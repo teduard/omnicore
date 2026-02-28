@@ -14,27 +14,27 @@ export interface DataSourceContextValue {
   setSource: (source: DataSource) => void;
 }
 
-const DataSourceContext = createContext<DataSourceContextValue>(null);
+const DataSourceContext = createContext<DataSourceContextValue | null>(null);
 
 const DataSourceProvider = ({children}) => {
     const { db, isReady, persist, execute } = useDatabase();
 
-    const DB_OBJ = {
-        db:db,
-        isReady: isReady,
-        persist: persist,
-        execute: execute,
-    }
-
     const [source, setSource] = useLocalStorage<DataSource>(STORAGE_KEYS.DATA_SOURCE, "local");
 
     const service = useMemo(() => {
+        const DB_OBJ = {
+            db:db,
+            isReady: isReady,
+            persist: persist,
+            execute: execute,
+        };
+
         if(source == "local") {
             return createLocalExpenseService(DB_OBJ);
         }
 
         return createRemoteExpenseService(import.meta.env.VITE_API_URL);
-    }, [source, db, isReady, DB_OBJ])
+    }, [source, db, isReady, execute, persist])
     
     const value = {service, source, setSource};
 

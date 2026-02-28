@@ -27,6 +27,15 @@ const DatabaseProvider = ({ children }: IDatabaseProviderProps) => {
   const [db, setDb] = useState(null);
   const [isReady, setIsReady] = useState(false);
 
+  const reloadFromStorage = useCallback(async () => {
+    const savedData = localStorage.getItem("sqlite_db");
+    if (!savedData) return;
+
+    const SQL = await initSqlJs({ locateFile: () => sqliteUrl });
+    const binaryData = Uint8Array.from(atob(savedData), (c) => c.charCodeAt(0));
+    setDb(new SQL.Database(binaryData));
+  }, []);
+
   // 1. Load and Initialize
   useEffect(() => {
     const initDB = async () => {
@@ -71,11 +80,16 @@ const DatabaseProvider = ({ children }: IDatabaseProviderProps) => {
                   user_id INTEGER,
                   theme TEXT,
                   layout_density TEXT,
+                  currency TEXT,
                   embeddings boolean,
                   webllm boolean,
                   created_date DATE,
                   updated_date DATE)
               `);
+          
+          newDb.exec(`INSERT INTO Preferences 
+              (preferences_id, user_id, theme, layout_density, currency, embeddings, webllm, created_date, updated_date) VALUES 
+              (1,1,"light","normal","USD",false, false, '2026-01-19', '2026-02-19')`);
 
           // init db tables
           newDb.exec(`CREATE TABLE IF NOT EXISTS 
@@ -85,9 +99,6 @@ const DatabaseProvider = ({ children }: IDatabaseProviderProps) => {
                   name TEXT, 
                   created_date DATE)
               `);
-
-          // expenses: expense_id, category_id, user_id, entry_date, updated_date, amount, comment, could_have_been_avoided
-          //db.exec(`drop table IF EXISTS Expenses `);
 
           newDb.exec(`CREATE TABLE IF NOT EXISTS 
               Expenses (
@@ -100,17 +111,6 @@ const DatabaseProvider = ({ children }: IDatabaseProviderProps) => {
                   created_date DATE,
                   updated_date DATE)
               `);
-
-          // db.exec(`INSERT INTO Expenses
-          //     (expense_id, category_id, user_id,
-          //     amount, comment, could_have_been_avoided, created_date, updated_date) VALUES
-          //     (1, 1, 1, 100.33, 'something normal', true, '2026/02/18', '2026-02-19')`)
-
-          // const res = newDb.exec("SELECT * FROM Expenses where user_id=1");
-          // logger.debug("RES = ", res);
-
-          // we need to insert some data here if it does not exist
-          // other wise, the user will see nothing
 
           newDb.exec(`INSERT INTO Categories (user_id, name, created_date) VALUES 
             (1, 'Food&Drink', '2026-02-19')`);
@@ -138,14 +138,14 @@ const DatabaseProvider = ({ children }: IDatabaseProviderProps) => {
               (6, 5, 1, 34, 'something normal', true, '2026-02-13', '2026-02-19')
               `);
 
-          for (let i = 7; i < 50; i++) {
+          for (let i = 7; i < 20; i++) {
             newDb.exec(`INSERT INTO Expenses 
               (expense_id, category_id, user_id,
               amount, comment, could_have_been_avoided, created_date, updated_date) VALUES 
               (${i}, ${(i % 7) + 1}, 1, ${50 + i}, 'Bread, butter ${i}', true, '2026-02-23', '2026-02-23')`);
           }
 
-          for (let i = 50; i < 100; i++) {
+          for (let i = 20; i < 40; i++) {
             newDb.exec(`INSERT INTO Expenses 
               (expense_id, category_id, user_id,
               amount, comment, could_have_been_avoided, created_date, updated_date) VALUES 
@@ -153,7 +153,6 @@ const DatabaseProvider = ({ children }: IDatabaseProviderProps) => {
           }
 
           setDb(newDb);
-          //logger.debug("SET DB 2")
         }
         setIsReady(true);
       } catch (err) {
@@ -203,7 +202,7 @@ const DatabaseProvider = ({ children }: IDatabaseProviderProps) => {
     return () => window.removeEventListener("storage", handleStorageChange);
   }, []);
 
-  const value = { db, isReady, persist };
+  const value = { db, isReady, persist, reloadFromStorage };
 
   return <DatabaseContext value={value}>{children}</DatabaseContext>;
 };

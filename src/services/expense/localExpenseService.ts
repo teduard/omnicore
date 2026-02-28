@@ -5,62 +5,31 @@ import type {
 } from "../../modules/ExpenseApp/interfaces/data";
 import { logger } from "../../lib/logger";
 import { getMonthDateRange } from "../../lib/dateUtils";
+import { dbExecute, dbQuery } from "../utils";
 
-const query = <T>(db, sql: string, params?: any): T[] => {
-  const stmt = db.prepare(sql);
-
-  if (params) stmt.bind(params);
-
-  const rows: T[] = [];
-
-  while (stmt.step()) {
-    rows.push(stmt.getAsObject() as T);
-  }
-
-  stmt.free();
-  return rows;
-};
-
-const execute = (
-  db,
-  sql: string,
-  params?: unknown[] | Record<string, unknown>
-): { changes: number; lastInsertRowId: number } => {
-  const stmt = db.prepare(sql);
-
-  if (params) stmt.bind(params);
-
-  stmt.step(); // execute
-
-  const result = {
-    changes: db.getRowsModified(),
-    lastInsertRowId: db.exec(
-      "SELECT last_insert_rowid() as id"
-    )[0]?.values[0]?.[0] as number
+const createLocalExpenseService = (db): IExpenseService => {
+  const getSession = () => {
+    const raw = localStorage.getItem("SessionUser");
+    if (!raw) throw new Error("No active session");
+    return JSON.parse(raw);
   };
 
-  stmt.free();
-
-  return result;
-}
-
-const createLocalExpenseService = (db): IExpenseService => ({
+  return {
   getExpenses: async (selectedDate) => {
+    const { UserId } = getSession();
     const expenseData: Array<IExpenseRow> = new Array<IExpenseRow>();
     const { start, end } = getMonthDateRange(selectedDate);
 
     try {
-      logger.debug("start = ", start);
-      logger.debug("end = ", end);
-
-      const expenses = query<IExpenseDbRow>(
+      const expenses = dbQuery<IExpenseDbRow>(
         db.db,
         `SELECT e.*,c.name, c.category_id FROM Expenses e
          join Categories c
          on e.category_id = c.category_id
          WHERE 
-         e.created_date >= ? and e.created_date <= ?`,
-        [start, end],
+         e.created_date >= ? and e.created_date <= ?
+         and e.user_id = ?`,
+        [start, end, UserId],
       );
 
       expenses.map((row) => {
@@ -84,13 +53,15 @@ const createLocalExpenseService = (db): IExpenseService => ({
   },
 
  addExpense: async (payload) => {  
-    execute(db.db, 
+  const { UserId } = getSession();
+    dbExecute(db.db, 
       `INSERT INTO Expenses
          (category_id, user_id, amount, comment,
           could_have_been_avoided, created_date, updated_date)
-       VALUES (?, 1, ?, ?, ?, ?, ?)`,
+       VALUES (?, ?, ?, ?, ?, ?, ?)`,
       [
         payload.categoryId,
+        UserId,
         payload.amount,
         payload.comment,
         payload.couldHaveBeenAvoided ? 1 : 0,
@@ -103,14 +74,18 @@ const createLocalExpenseService = (db): IExpenseService => ({
   },
 
   updateExpense: async (payload) => {
-   execute(db.db, 
+    const { UserId } = getSession();
+   dbExecute(db.db, 
       `UPDATE Expenses
         set 
         category_id = ?,
         amount = ?,
-        comment = ?
-        create_date = ?
-        could_have_been_avoided = ?`, 
+        comment = ?,
+        created_date = ?
+        could_have_been_avoided = ?
+        WHERE expense_id = ?
+        and user_id = ?
+        `, 
         // needs the update_date to be now
       [
         payload.categoryId,
@@ -119,19 +94,41 @@ const createLocalExpenseService = (db): IExpenseService => ({
         payload.date,
         payload.couldHaveBeenAvoided ? 1 : 0,
         payload.date,
+        payload.expenseId,
+        UserId
       ]
     );
 
     db.persist();
   },
 
-  deleteExpense: async (expenseId) => {
-    execute(db.db, 
-      `DELETE FROM Expenses WHERE expense_id = ?`,
+  deleteExpense: async (payload) => {
+    const { UserId } = getSession();
+    // the user_id would be taken from the existing session/jwt and not be exposed to the ui
+    
+    logger.debug("in deleteExpense, userId = ", UserId);
+    logger.debug("payload:", payload)
+
+    const r = dbExecute(db.db, 
+      `DELETE FROM Expenses WHERE expense_id = ? and user_id = ?`,
       [
-        expenseId
+        payload.expenseId, UserId
       ]
     );
+
+    logger.debug("r = ", r);
+
+    const expenses = dbQuery<IExpenseDbRow>(
+        db.db,
+        `SELECT e.*,c.name, c.category_id FROM Expenses e
+         join Categories c
+         on e.category_id = c.category_id
+         WHERE 
+         e.user_id = ?`,
+        [UserId],
+      );
+    console.log(expenses)
+
     db.persist();
   },
 
@@ -163,6 +160,7 @@ deleteExpense: async (expenseId) => {
     persist();
   },
   */
-});
+}
+};
 
 export { createLocalExpenseService };

@@ -13,6 +13,7 @@ import { UserContext } from "../../../contexts/UserContext";
 import { logger } from "../../../lib/logger";
 
 import { type NonCancelableCustomEvent } from "@cloudscape-design/components";
+import { useDeleteExpenses } from "../../../hooks/useExpenses";
 
 interface DropdownDetail {
   id: string;
@@ -23,6 +24,8 @@ function ExpenseCostExplorerTable(props: IExpenseTableData) {
   const {defaultCurrency} = userContext;
 
   const [selectedItems, setSelectedItems] = useState([]);
+
+  const { mutate: deleteExpense, isPending } = useDeleteExpenses();
 
   useEffect(() => {
     logger.debug("props.LoadingStatus= ", props.LoadingStatus);
@@ -38,10 +41,10 @@ function ExpenseCostExplorerTable(props: IExpenseTableData) {
           break;
         case "delete":
           logger.debug("delete expense: ", selectedItems);
-          // execute(
-          //   `DELETE FROM Categories where category_id = '${selectedItems[0].category_id}'`,
-          // );
-          // fetchCat();
+          logger.debug("expenseID:", selectedItems[0].expenseId )
+          deleteExpense({
+            expenseId: selectedItems[0].expenseId  
+           })
           break;
         default:
           break;

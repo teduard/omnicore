@@ -6,37 +6,9 @@ import {
   Mode,
 } from "@cloudscape-design/global-styles";
 import { logger } from "../lib/logger";
-//import type { Theme } from "@cloudscape-design/components/theming";
 
 const UserContext = createContext(null);
-{
-  /*
-const mainTheme: Theme = {
-      tokens: {
-      // Values are applied globally, except for visual contexts
-      colorBackgroundLayoutMain: {
-          // Specify value for light and dark mode
-          light: 'white',
-          dark: 'blue'
-      },
-      // Shorter syntax to apply the same value for both light and dark mode
-      colorTextAccent: '#0073bb',
-   },
-   contexts: {
-      // Values for visual contexts. Unless specified, default values will be applied
-      'top-navigation': {
-         tokens: {
-            //colorTextAccent: '#f00',
-            colorBackgroundContainerContent: '#173451',
-         },
-      },
-      //header: {...},
-      //flashbar: {...},
-      //alert: {...},
-   },
-   };
-*/
-}
+
 const themeOptions = [
   { value: "light", label: "Light" },
   { value: "dark", label: "Dark" },
@@ -122,22 +94,6 @@ const UserProvider = ({ children }: IUserProviderProps) => {
     });
   };
 
-  const value = {
-    defaultTheme,
-    themeOptions,
-    toggleTheme,
-    setTheme,
-    setDefaultTheme,
-    defaultCurrency,
-    setDefaultCurrency,
-    currencyOptions,
-    defaultDensity,
-    toggleDensity,
-    densityOptions,
-    setDensity,
-    setDefaultDensity,
-  };
-
   // needs saving to database
   // and to localStorage
   useEffect(() => {
@@ -161,9 +117,25 @@ const UserProvider = ({ children }: IUserProviderProps) => {
   useEffect(() => {
     // needs saving to database
     // and to localStorage
-    logger.debug("currency has change un userContext");
+    logger.debug("currency has changed in userContext");
     logger.debug(defaultCurrency);
   }, [defaultCurrency]);
+
+  const value = {
+    defaultTheme,
+    themeOptions,
+    toggleTheme,
+    setTheme,
+    setDefaultTheme,
+    defaultCurrency,
+    setDefaultCurrency,
+    currencyOptions,
+    defaultDensity,
+    toggleDensity,
+    densityOptions,
+    setDensity,
+    setDefaultDensity,
+  };
 
   return <UserContext value={value}>{children}</UserContext>;
 };

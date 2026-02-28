@@ -91,14 +91,9 @@ function Content() {
   const [data, setData] = React.useState(new Array<IExpenseRow>());
 
   const updateExpenseHandler = () => {
-    logger.debug("in expenseDashboard updateExpenseHandler")
-
     if(isStale) {
       refetch();
     }
-
-    //const apiEndpoint =
-    //`${import.meta.env.VITE_API_URL}/api/expense/get_all?date=${selectedDate}`;
 
     setExpenseInsightsData({
       ...defaultExpenseInsightsData,
@@ -109,8 +104,6 @@ function Content() {
       ...defaultExpenseCategoryAggregateData,
       LoadingStatus: "loading",
     });
-
-    logger.debug("new_expenses = ", new_expenses)
 
     setExpenses(new_expenses);
     updateDisplay();
@@ -198,7 +191,7 @@ const queryClient = useQueryClient();
           { colspan: { default: 12 } },
         ]}
       >
-        <Container header={<Header variant="h1">Current status #{status}# {isLoading + ""} | {isStale + ""}</Header>}>
+        <Container header={<Header variant="h1">Current status</Header>}>
           <Grid
             gridDefinition={[
               { colspan: { default: 12, xs: 7 } },
@@ -206,12 +199,6 @@ const queryClient = useQueryClient();
             ]}
           >
             <div>
-            <Button onClick={() => {
-                  queryClient.invalidateQueries({
-                      queryKey: EXPENSE_KEYS.all,
-                    });
-            }}>refetch data</Button>
-
               <ProgressBar
                 value={numericMonthProgress}
                 additionalInfo={monthProgress}
