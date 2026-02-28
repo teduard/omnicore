@@ -54,6 +54,34 @@ export const useAddExpenses = () => {
   });
 };
 
+export const useGetExpenseById = (expenseId: number) => {
+  const { service } = useContext(DataSourceContext);
+  const { isReady } = useDatabase();
+
+  return useQuery({
+    queryKey: ["expense", expenseId],
+    queryFn: () => service.getExpenseById(expenseId),
+    enabled: isReady && expenseId > 0,
+    staleTime: Infinity,
+  });
+};
+
+export const useEditExpense = () => {
+  const { service } = useContext(DataSourceContext);
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: (payload: NewExpensePayload) => {
+      logger.debug("edit payload = ", payload);
+      return service.updateExpense(payload);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: EXPENSE_KEYS.all() });
+      broadcastInvalidation(EXPENSE_KEYS.all());
+    },
+  });
+};
+
 export const useDeleteExpenses = () => {
   const context = useContext(DataSourceContext);
 

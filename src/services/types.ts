@@ -16,6 +16,7 @@ export interface DeleteExpensePayload {
 export interface IExpenseService {
   getExpenses(selectedDate: string): Promise<IExpenseRow[]>;
   addExpense(payload: NewExpensePayload): Promise<void>;
+  getExpenseById(expenseId: number): Promise<IExpenseRow | null>;
   updateExpense(payload: NewExpensePayload): Promise<void>;
   deleteExpense(payload: DeleteExpensePayload): Promise<void>;
 }

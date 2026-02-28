@@ -15,110 +15,135 @@ const createLocalExpenseService = (db): IExpenseService => {
   };
 
   return {
-  getExpenses: async (selectedDate) => {
-    const { UserId } = getSession();
-    const expenseData: Array<IExpenseRow> = new Array<IExpenseRow>();
-    const { start, end } = getMonthDateRange(selectedDate);
+    getExpenses: async (selectedDate) => {
+      const { UserId } = getSession();
+      const expenseData: Array<IExpenseRow> = new Array<IExpenseRow>();
+      const { start, end } = getMonthDateRange(selectedDate);
 
-    try {
-      const expenses = dbQuery<IExpenseDbRow>(
-        db.db,
-        `SELECT e.*,c.name, c.category_id FROM Expenses e
+      try {
+        const expenses = dbQuery<IExpenseDbRow>(
+          db.db,
+          `SELECT e.*,c.name, c.category_id FROM Expenses e
          join Categories c
          on e.category_id = c.category_id
          WHERE 
          e.created_date >= ? and e.created_date <= ?
          and e.user_id = ?`,
-        [start, end, UserId],
-      );
+          [start, end, UserId],
+        );
 
-      expenses.map((row) => {
-        expenseData.push({
-          expenseId: row.expense_id,
-          category: {
-            name: row.name,
-            categoryId: row.category_id,
-          },
-          entryDate: row.created_date,
-          amount: row.amount,
-          comment: row.comment,
-          couldHaveBeenAvoided: row.could_have_been_avoided,
+        expenses.map((row) => {
+          expenseData.push({
+            expenseId: row.expense_id,
+            category: {
+              name: row.name,
+              categoryId: row.category_id,
+            },
+            entryDate: row.created_date,
+            amount: row.amount,
+            comment: row.comment,
+            couldHaveBeenAvoided: row.could_have_been_avoided,
+          });
         });
-      });
-    } catch (e) {
-      logger.debug("error:", e);
-    }
+      } catch (e) {
+        logger.debug("error:", e);
+      }
 
-    return expenseData;
-  },
+      return expenseData;
+    },
 
- addExpense: async (payload) => {  
-  const { UserId } = getSession();
-    dbExecute(db.db, 
-      `INSERT INTO Expenses
+    addExpense: async (payload) => {
+      const { UserId } = getSession();
+      dbExecute(
+        db.db,
+        `INSERT INTO Expenses
          (category_id, user_id, amount, comment,
           could_have_been_avoided, created_date, updated_date)
        VALUES (?, ?, ?, ?, ?, ?, ?)`,
-      [
-        payload.categoryId,
-        UserId,
-        payload.amount,
-        payload.comment,
-        payload.couldHaveBeenAvoided ? 1 : 0,
-        payload.date,
-        payload.date,
-      ]
-    );
+        [
+          payload.categoryId,
+          UserId,
+          payload.amount,
+          payload.comment,
+          payload.couldHaveBeenAvoided ? 1 : 0,
+          payload.date,
+          payload.date,
+        ],
+      );
 
-    db.persist();
-  },
+      db.persist();
+    },
 
-  updateExpense: async (payload) => {
-    const { UserId } = getSession();
-   dbExecute(db.db, 
-      `UPDATE Expenses
+    getExpenseById: async (expenseId) => {
+      const { UserId } = getSession();
+      const rows = dbQuery<IExpenseDbRow>(
+        db.db,
+        `SELECT e.*, c.name, c.category_id FROM Expenses e
+     JOIN Categories c ON e.category_id = c.category_id
+     WHERE e.expense_id = ? AND e.user_id = ?`,
+        [expenseId, UserId],
+      );
+
+      if (!rows.length) return null;
+      const row = rows[0];
+
+      return {
+        expenseId: row.expense_id,
+        category: { name: row.name, categoryId: row.category_id },
+        entryDate: row.created_date,
+        amount: row.amount,
+        comment: row.comment,
+        couldHaveBeenAvoided: row.could_have_been_avoided,
+      };
+    },
+
+    updateExpense: async (payload) => {
+      const { UserId } = getSession();
+      dbExecute(
+        db.db,
+        `UPDATE Expenses
         set 
         category_id = ?,
         amount = ?,
         comment = ?,
-        created_date = ?
-        could_have_been_avoided = ?
+        created_date = ?,
+        could_have_been_avoided = ?,
+        updated_date = ?
         WHERE expense_id = ?
         and user_id = ?
-        `, 
+        `,
         // needs the update_date to be now
-      [
-        payload.categoryId,
-        payload.amount,
-        payload.comment,
-        payload.date,
-        payload.couldHaveBeenAvoided ? 1 : 0,
-        payload.date,
-        payload.expenseId,
-        UserId
-      ]
-    );
+        [
+          payload.categoryId,
+          payload.amount,
+          payload.comment,
+          payload.date,
+          payload.couldHaveBeenAvoided ? 1 : 0,
+          payload.date,
+          payload.expenseId,
+          UserId,
+        ],
+      );
 
-    db.persist();
-  },
+      db.persist();
+    },
 
-  deleteExpense: async (payload) => {
-    const { UserId } = getSession();
-    // the user_id would be taken from the existing session/jwt and not be exposed to the ui
-    
-    logger.debug("in deleteExpense, userId = ", UserId);
-    logger.debug("payload:", payload)
+    deleteExpense: async (payload) => {
+      const { UserId } = getSession();
+      // the user_id would be taken from the existing session/jwt and not be exposed to the ui
 
-    const r = dbExecute(db.db, 
-      `DELETE FROM Expenses WHERE expense_id = ? and user_id = ?`,
-      [
-        payload.expenseId, UserId
-      ]
-    );
+      logger.debug("in deleteExpense, userId = ", UserId);
+      logger.debug("payload:", payload);
 
-    logger.debug("r = ", r);
+      const r = dbExecute(
+        db.db,
+        `DELETE FROM Expenses WHERE expense_id = ? and user_id = ?`,
+        [payload.expenseId, UserId],
+      );
 
-    const expenses = dbQuery<IExpenseDbRow>(
+      logger.debug("r = ", r);
+
+      const expenses = dbQuery<IExpenseDbRow>(
         db.db,
         `SELECT e.*,c.name, c.category_id FROM Expenses e
          join Categories c
@@ -127,12 +152,12 @@ const createLocalExpenseService = (db): IExpenseService => {
          e.user_id = ?`,
         [UserId],
       );
-    console.log(expenses)
+      console.log(expenses);
 
-    db.persist();
-  },
+      db.persist();
+    },
 
-  /*
+    /*
 deleteExpense: async (expenseId) => {
     db.exec("DELETE FROM Expenses WHERE expense_id = ?", [expenseId]);
     persist();
@@ -160,7 +185,7 @@ deleteExpense: async (expenseId) => {
     persist();
   },
   */
-}
+  };
 };
 
 export { createLocalExpenseService };

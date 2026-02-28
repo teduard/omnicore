@@ -9,11 +9,8 @@ import type {
 } from "../interfaces/data.ts";
 
 import { type IExpenseInsightsData } from "../interfaces/data.ts";
-import ExpenseCostExplorerSelector from "../components/ExpenseCostExplorerSelector.tsx";
 import ExpenseLayout from "../ExpenseLayout.tsx";
 import { ExpenseRoutes } from "../../../routes/index.tsx";
-
-import { useDatabase } from "../../../db/hooks/useDatabase.tsx";
 import { useExpenseStore } from "../../../hooks/store.ts";
 import { AuthContext } from "../../../contexts/AuthContext.tsx";
 import { logger } from "../../../lib/logger.ts";

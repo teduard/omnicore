@@ -4,6 +4,7 @@ const ExpenseCategories = lazy(() => import("../modules/ExpenseApp/ExpenseCatego
 const ExpenseCategoriesAdd = lazy(() => import("../modules/ExpenseApp/ExpenseCategoriesAdd"));
 const ExpenseDashboard = lazy(() => import("../modules/ExpenseApp/ExpenseDashboard"));
 const ExpenseCostExplorer = lazy(() => import("../modules/ExpenseApp/layout/ExpenseCostExplorer"));
+const ExpenseEdit = lazy(() => import("../modules/ExpenseApp/ExpenseEdit"));
 
 const appRoute = 'dashboard/expense';
 
@@ -19,6 +20,10 @@ const AppRoutes = [
     {
     path: `${appRoute}/costlocal`,
     element: <ExpenseCostExplorer />
+    },
+    {
+    path: `/${appRoute}/edit/:expenseId`,
+    element: <ExpenseEdit />
     },
     {
     path: `${appRoute}/categories`,

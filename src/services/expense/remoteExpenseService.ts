@@ -18,5 +18,9 @@ export const createRemoteExpenseService = (baseUrl: string): IExpenseService => 
 
   deleteExpense: async (_expenseId) => {
     throw new Error("deleteExpense not implemented");
+  },
+
+  getExpenseById: async (_expenseId) => {
+    throw new Error("getExpenseById not implemented");
   }
 });
