@@ -79,7 +79,7 @@ define(['./workbox-5a5d9309'], (function (workbox) { 'use strict';
    */
   workbox.precacheAndRoute([{
     "url": "index.html",
-    "revision": "2e7ec3df99a8154e15c6481e2f8fbd95"
+    "revision": "0c43d51f345ed974ca0794f3b8ccb237"
   }, {
     "url": "404.html",
     "revision": "3d58dfedc54bf05a23d2c31f458dd246"
@@ -90,10 +90,13 @@ define(['./workbox-5a5d9309'], (function (workbox) { 'use strict';
     "url": "assets/webllm-l0sNRNKZ.js",
     "revision": null
   }, {
-    "url": "assets/useExpenses-COxiYyZi.js",
+    "url": "assets/useExpenses-DfANjbid.css",
     "revision": null
   }, {
-    "url": "assets/use-select-b3NgfctH.js",
+    "url": "assets/useExpenses-C5VqX26q.js",
+    "revision": null
+  }, {
+    "url": "assets/use-select-BkbprCW5.js",
     "revision": null
   }, {
     "url": "assets/use-select-0B8g2LyH.css",
@@ -102,85 +105,85 @@ define(['./workbox-5a5d9309'], (function (workbox) { 'use strict';
     "url": "assets/sql-wasm-CbWyWKgW.wasm",
     "revision": null
   }, {
-    "url": "assets/internal-DfANjbid.css",
-    "revision": null
-  }, {
-    "url": "assets/internal-DXmJE_9T.js",
-    "revision": null
-  }, {
-    "url": "assets/index-wsLrhGX8.js",
-    "revision": null
-  }, {
-    "url": "assets/index-sbGZmitb.js",
-    "revision": null
-  }, {
     "url": "assets/index-LtbZklMj.css",
     "revision": null
   }, {
-    "url": "assets/index-Dxp5wfc5.js",
+    "url": "assets/index-DtL_rSmH.js",
     "revision": null
   }, {
-    "url": "assets/index-C3RXUv3R.js",
+    "url": "assets/index-DcwmwveH.js",
+    "revision": null
+  }, {
+    "url": "assets/index-CkrCR6Hq.js",
+    "revision": null
+  }, {
+    "url": "assets/index-C2wDvPn0.js",
     "revision": null
   }, {
     "url": "assets/index-BHZ_Gn1G.css",
     "revision": null
   }, {
+    "url": "assets/index-B5h-64n8.js",
+    "revision": null
+  }, {
     "url": "assets/index-5_HoX4TX.css",
     "revision": null
   }, {
-    "url": "assets/highcharts-zsjp5egu.js",
+    "url": "assets/highcharts-phCCLP2t.js",
     "revision": null
   }, {
-    "url": "assets/highcharts-more-oZopo2x7.js",
+    "url": "assets/highcharts-more-dQYCNLug.js",
     "revision": null
   }, {
-    "url": "assets/accessibility-C7PGYP5x.js",
+    "url": "assets/accessibility-DWxgAEQh.js",
     "revision": null
   }, {
-    "url": "assets/SystemSettings-aaKlkdLS.js",
+    "url": "assets/SystemSettings-BDjV4F3J.js",
     "revision": null
   }, {
-    "url": "assets/Profile-BTMflrez.js",
+    "url": "assets/Profile-BYzmCAUP.js",
     "revision": null
   }, {
-    "url": "assets/Preferences-TpoHJohJ.js",
+    "url": "assets/Preferences-b77F3sSY.js",
     "revision": null
   }, {
-    "url": "assets/MonthPicker-zNYVq-wH.js",
+    "url": "assets/MonthPicker-vkpLPQGS.js",
     "revision": null
   }, {
     "url": "assets/MonthPicker-3tFKCjB0.css",
     "revision": null
   }, {
-    "url": "assets/Layout-BPzwX8N8.js",
+    "url": "assets/Layout--DJ27DAr.js",
     "revision": null
   }, {
-    "url": "assets/ExpenseLayout-EktDzCz8.js",
+    "url": "assets/ExpenseLayout-CmQ90yTE.js",
+    "revision": null
+  }, {
+    "url": "assets/ExpenseEdit-Biu8ENoy.js",
     "revision": null
   }, {
     "url": "assets/ExpenseDashboard-C-UjkKS6.css",
     "revision": null
   }, {
-    "url": "assets/ExpenseDashboard-BWRrofJV.js",
+    "url": "assets/ExpenseDashboard-BRkMbcwo.js",
     "revision": null
   }, {
-    "url": "assets/ExpenseCostExplorer-DSboSn-8.js",
+    "url": "assets/ExpenseCostExplorer-BisEXAnt.js",
     "revision": null
   }, {
-    "url": "assets/ExpenseCategoriesAdd-JWEhX1y1.js",
+    "url": "assets/ExpenseCategoriesAdd-DooMG7pS.js",
     "revision": null
   }, {
-    "url": "assets/ExpenseCategories-BmZdJub8.js",
+    "url": "assets/ExpenseCategories-7kIRIqsP.js",
     "revision": null
   }, {
-    "url": "assets/ExpenseAdd-MQi0SXFN.js",
+    "url": "assets/ExpenseAdd-CJ70C-zr.js",
     "revision": null
   }, {
-    "url": "assets/Documentation-CXMNM3kI.js",
+    "url": "assets/Documentation-DaLzex4S.js",
     "revision": null
   }, {
-    "url": "assets/Dashboard-Cqg16h8z.js",
+    "url": "assets/Dashboard-B424JOML.js",
     "revision": null
   }, {
     "url": "favicon.ico",
