@@ -7,7 +7,6 @@ import {
   KeyValuePairs,
   Select,
 } from "@cloudscape-design/components";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import Layout from "./Layout";
 
 import Box from "@cloudscape-design/components/box";
@@ -18,8 +17,6 @@ import { UserContext } from "../../contexts/UserContext";
 import { useContext, useState } from "react";
 import AppBreadcrumbs from "../../components/AppBreadcrumbs";
 import { DataSourceContext } from "../../contexts/DataSourceContext";
-
-const queryClient = new QueryClient();
 
 interface IConfigFormProps {
   isVisible: boolean;
@@ -224,9 +221,7 @@ function Breadcrumbs() {
 function Preferences() {
   return (
     <>
-      <QueryClientProvider client={queryClient}>
-        <Layout content={<AppContent />} breadcrumbs={<Breadcrumbs />} />
-      </QueryClientProvider>
+      <Layout content={<AppContent />} breadcrumbs={<Breadcrumbs />} />
     </>
   );
 }

@@ -3,7 +3,6 @@ import {
   useState,
   useEffect,
   type ReactNode,
-  useContext,
 } from "react";
 import {
   applyDensity,
@@ -12,7 +11,6 @@ import {
   Mode,
 } from "@cloudscape-design/global-styles";
 import { logger } from "../lib/logger";
-import { DataSourceContext } from "./DataSourceContext";
 
 const UserContext = createContext(null);
 
@@ -65,6 +63,7 @@ const UserProvider = ({ children }: IUserProviderProps) => {
   const localTheme = localStorage.getItem("SessionTheme");
   const localCurrency = localStorage.getItem("SessionCurrency");
   const localLayout = localStorage.getItem("SessionLayout");
+  const user = JSON.parse(localStorage.getItem("SessionUser"));
 
   const [defaultTheme, setDefaultTheme] = useState(
     localTheme === "light"
@@ -169,6 +168,7 @@ const UserProvider = ({ children }: IUserProviderProps) => {
     densityOptions,
     setDensity,
     setDefaultDensity,
+    user
   };
 
   return <UserContext value={value}>{children}</UserContext>;

@@ -140,20 +140,6 @@ const createLocalExpenseService = (db): IExpenseService => {
         `DELETE FROM Expenses WHERE expense_id = ? and user_id = ?`,
         [payload.expenseId, UserId],
       );
-
-      logger.debug("r = ", r);
-
-      const expenses = dbQuery<IExpenseDbRow>(
-        db.db,
-        `SELECT e.*,c.name, c.category_id FROM Expenses e
-         join Categories c
-         on e.category_id = c.category_id
-         WHERE 
-         e.user_id = ?`,
-        [UserId],
-      );
-      console.log(expenses);
-
       db.persist();
     },
 

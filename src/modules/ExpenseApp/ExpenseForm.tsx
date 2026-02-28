@@ -129,10 +129,12 @@ function ExpenseFormLocal() {
 
   return (
     <>
+    <SpaceBetween direction="vertical" size="l">
       {flashbarVisible && <Flashbar items={flashbarItems} />}
 
       <form onSubmit={handleForm}>
         <Form
+        header={<Header variant="h1">Add expense</Header>}
           actions={
             <SpaceBetween direction="horizontal" size="xs">
               <Button
@@ -148,7 +150,7 @@ function ExpenseFormLocal() {
             </SpaceBetween>
           }
         >
-          <Container header={<Header variant="h2">New expense</Header>}>
+          <Container>
             <SpaceBetween direction="vertical" size="l">
               <FormField label="Amount">
                 <Input
@@ -193,6 +195,7 @@ function ExpenseFormLocal() {
           </Container>
         </Form>
       </form>
+      </SpaceBetween>
     </>
   );
 }

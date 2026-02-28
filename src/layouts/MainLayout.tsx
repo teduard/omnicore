@@ -9,6 +9,7 @@ import {
   AppLayoutToolbar,
   SpaceBetween,
   Icon,
+  HelpPanel,
 } from "@cloudscape-design/components";
 
 import { I18nProvider } from "@cloudscape-design/components/i18n";
@@ -28,6 +29,8 @@ import { AuthContext } from "../contexts/AuthContext";
 import LoadingSpinner from "../components/LoadingSpinner";
 import { logger } from "../lib/logger";
 import { DataSourceContext } from "../contexts/DataSourceContext";
+import { NotificationPanel } from "../components/NotificationPanel";
+import { useNotificationStore } from "../hooks/";
 
 const LOCALE = "en";
 
@@ -85,7 +88,14 @@ function MainLayout(props: IMainLayoutProps) {
   const context = useContext(DataSourceContext);
   const { preferencesService } = context;
 
-  //
+  const unreadCount = useNotificationStore((state) => state.unreadCount());
+  const markAllRead = useNotificationStore((state) => state.markAllRead);
+  const [toolsOpen, setToolsOpen] = useState(false);
+
+  const handleBellClick = () => {
+    //markAllRead();
+    setToolsOpen(!toolsOpen);
+  };
 
   const navigate = useNavigate();
   const authContext = useContext(AuthContext);
@@ -98,6 +108,8 @@ function MainLayout(props: IMainLayoutProps) {
   if (!userContext) {
     throw new Error("UserContext context is not present");
   }
+
+  const { user } = userContext;
 
   const handlePrefClick = async (event, userContext) => {
     const { setTheme, setDensity } = userContext;
@@ -174,8 +186,6 @@ function MainLayout(props: IMainLayoutProps) {
 
   const { defaultTheme, defaultDensity } = userContext;
 
-  const [toolsOpen, setToolsOpen] = useState(false);
-
   const handleSignOutClick = (event) => {
     logger.debug("in handleSignOutClick");
     event.preventDefault();
@@ -248,12 +258,20 @@ function MainLayout(props: IMainLayoutProps) {
                 href: "/about",
                 onFollow: handleNavigationClick,
               },
+              // {
+              //   type: "button",
+              //   iconName: "notification",
+              //   ariaLabel: "Notifications",
+              //   badge: true,
+              //   disableUtilityCollapse: true,
+              // },
               {
                 type: "button",
                 iconName: "notification",
                 ariaLabel: "Notifications",
-                badge: true,
+                badge: unreadCount > 0, // ← dynamic, was hardcoded true
                 disableUtilityCollapse: true,
+                onClick: handleBellClick, // ← was missing
               },
               // { type: 'button', iconName: 'settings', title: 'Settings', ariaLabel: 'Settings' },
               // {
@@ -322,8 +340,8 @@ function MainLayout(props: IMainLayoutProps) {
               },
               {
                 type: "menu-dropdown",
-                text: "Admin",
-                description: "john.doe@gmail.com",
+                text: user.FirstName,
+                description: user.Email,
                 iconName: "user-profile",
                 onItemClick: (event) =>
                   handleUserMenuClick(event, authContext, navigate),
@@ -341,13 +359,21 @@ function MainLayout(props: IMainLayoutProps) {
           breadcrumbs={props.breadcrumbs}
           maxContentWidth={1400}
           content={<SpaceBetween size="m">{props.content}</SpaceBetween>}
-          toolsOpen={toolsOpen}
-          onToolsChange={({ detail }) => setToolsOpen(detail.open)}
-          tools={props.tools}
-          toolsHide={props.toolsHide}
+          // toolsOpen={toolsOpen}
+          // onToolsChange={({ detail }) => setToolsOpen(detail.open)}
+          // tools={props.tools}
+          // toolsHide={props.toolsHide}
           splitPanelPreferences={{ position: "side" }}
           splitPanel={props.splitPanel}
           navigation={<>{props.navigation}</>}
+          tools={
+            <HelpPanel header={<><h2>Notifications</h2><hr/></>}>
+              <NotificationPanel />
+            </HelpPanel>
+          }
+          toolsOpen={toolsOpen}
+          onToolsChange={({ detail }) => setToolsOpen(detail.open)}
+          toolsHide={false}
         />
 
         <StickyFooter />

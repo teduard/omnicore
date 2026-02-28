@@ -1,5 +1,4 @@
 import { Link } from "@cloudscape-design/components";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import Layout from "./Layout";
 import Cards from "@cloudscape-design/components/cards";
 import Box from "@cloudscape-design/components/box";
@@ -23,8 +22,8 @@ import {
   SystemLogsRoutes,
 } from "../../routes";
 import AppBreadcrumbs from "../../components/AppBreadcrumbs";
-
-const queryClient = new QueryClient();
+import { UserContext } from "../../contexts/UserContext";
+import { useContext } from "react";
 
 function AppContent() {
   const imgs = [expenseLogo, fitnessLogo, taskifyLogo, teamLogo, systemLogo];
@@ -226,19 +225,22 @@ function Breadcrumbs() {
 }
 
 function Dashboard() {
+const userContext = useContext(UserContext);
+  if (!userContext) {
+    throw new Error("UserContext context is not present");
+  }
+  const { user } = userContext;
   return (
     <>
-      <QueryClientProvider client={queryClient}>
         <Layout
           content={
             <>
-              <h1 className="greeting">Welcome, John</h1>
+              <h1 className="greeting">Welcome, {user.FirstName}</h1>
               <AppContent />{" "}
             </>
           }
           breadcrumbs={<Breadcrumbs />}
         />
-      </QueryClientProvider>
     </>
   );
 }

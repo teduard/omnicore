@@ -5,7 +5,7 @@ import {
   SplitPanel,
   Spinner,
 } from "@cloudscape-design/components";
-import { MainLayout } from "../../layouts";
+import { MainLayout } from "../../layouts/index";
 
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";

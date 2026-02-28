@@ -27,7 +27,7 @@ function HeroHeader() {
             <img src={apps} alt="OmniCore Apps" width="300" />
            
             <Box textAlign="center">
-                 <Button variant="primary" fullWidth={false} href={`${import.meta.env.BASE_URL}/login`}>
+                 <Button variant="primary" fullWidth={false} href={`${import.meta.env.BASE_URL}login`}>
                   Try the demo
                 </Button>
                 <h3>your data never leaves your browser</h3>

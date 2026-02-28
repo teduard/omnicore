@@ -6,7 +6,6 @@ import {
   Input,
   KeyValuePairs,
 } from "@cloudscape-design/components";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import Layout from "./Layout";
 import Box from "@cloudscape-design/components/box";
 import SpaceBetween from "@cloudscape-design/components/space-between";
@@ -17,11 +16,9 @@ import { AuthContext } from "../../contexts/AuthContext";
 import { DashboardRoutes } from "../../routes";
 import AppBreadcrumbs from "../../components/AppBreadcrumbs";
 
-const queryClient = new QueryClient();
-
 function GeneralConfig() {
   const authContext = useContext(AuthContext);
-   if (!authContext) {
+  if (!authContext) {
     throw new Error("useAuth must be used within AuthProvider");
   }
   const { isAuthenticated, user } = authContext;
@@ -176,9 +173,7 @@ function Breadcrumbs() {
 function Profile() {
   return (
     <>
-      <QueryClientProvider client={queryClient}>
-        <Layout content={<AppContent />} breadcrumbs={<Breadcrumbs />} />
-      </QueryClientProvider>
+      <Layout content={<AppContent />} breadcrumbs={<Breadcrumbs />} />
     </>
   );
 }
