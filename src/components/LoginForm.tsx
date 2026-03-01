@@ -14,6 +14,7 @@ import { useContext } from "react";
 import { AuthContext } from "../contexts/AuthContext";
 import { useDatabase } from "../db/hooks/useDatabase";
 import { logger } from "../lib/logger";
+import { getCurrentYearMonthDay } from "../lib/dateUtils";
 
 function LoginForm() {
   const authContext = useContext(AuthContext);
@@ -33,6 +34,15 @@ function LoginForm() {
   };
 
   const handleForm = () => {
+    const cur = new Date();
+    const f = getCurrentYearMonthDay(cur);
+
+    const prev = new Date(cur);
+    prev.setDate(cur.getDate() - 1)
+    const fprev = getCurrentYearMonthDay(prev);
+    console.log("F = ", f);
+    console.log("Fpref = ", fprev);
+
     const sql = `SELECT user_id, first_name, last_name, email, town, phone
       from Users
       where 

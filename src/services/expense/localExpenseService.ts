@@ -135,7 +135,7 @@ const createLocalExpenseService = (db): IExpenseService => {
       logger.debug("in deleteExpense, userId = ", UserId);
       logger.debug("payload:", payload);
 
-      const r = dbExecute(
+      dbExecute(
         db.db,
         `DELETE FROM Expenses WHERE expense_id = ? and user_id = ?`,
         [payload.expenseId, UserId],

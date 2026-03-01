@@ -55,7 +55,12 @@ function GeneralConfig() {
                 label: "",
                 value: (
                   <Box textAlign="right" variant="p">
-                    <Button>Edit</Button>
+                    <Button
+                      disabled
+                      disabledReason="Unavailable for current demo"
+                    >
+                      Edit
+                    </Button>
                   </Box>
                 ),
               },
@@ -123,7 +128,12 @@ function ResetPassword() {
               label: "",
               value: (
                 <Box textAlign="right" variant="p">
-                  <Button>Edit</Button>
+                  <Button
+                    disabled
+                    disabledReason="Unavailable for current demo"
+                  >
+                    Edit
+                  </Button>
                 </Box>
               ),
             },
@@ -152,7 +162,7 @@ function AppContent() {
 
       <SpaceBetween direction="vertical" size="l">
         <GeneralConfig />
-        <GeneralConfigEditForm />
+        {false && <GeneralConfigEditForm />}
         <ResetPassword />
       </SpaceBetween>
     </SpaceBetween>

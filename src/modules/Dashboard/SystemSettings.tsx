@@ -1,9 +1,11 @@
 import {
+  Box,
   Button,
   Container,
   Header,
   KeyValuePairs,
   Link,
+  Modal,
   SpaceBetween,
   Toggle,
 } from "@cloudscape-design/components";
@@ -12,6 +14,7 @@ import { DashboardRoutes, SystemLogsRoutes } from "../../routes";
 
 import React from "react";
 import AppBreadcrumbs from "../../components/AppBreadcrumbs";
+import { STORAGE_KEYS } from "../../lib/storageKeys";
 
 function DatabaseConfig() {
   const handleDbDownload = () => {
@@ -24,30 +27,20 @@ function DatabaseConfig() {
     a.click();
   };
 
+  const [visibleModal, setVisibleModal] = React.useState(false);
+
+  const handleDbResetConfirmation = () => {
+    localStorage.removeItem(STORAGE_KEYS.SQLITE_DB);
+    localStorage.removeItem(STORAGE_KEYS.SESSION_USER);
+    localStorage.removeItem(STORAGE_KEYS.LAYOUT_THEME);
+    localStorage.removeItem(STORAGE_KEYS.LAYOUT_DENSITY);
+    localStorage.removeItem(STORAGE_KEYS.SESSION_AUTH);
+    window.location.reload();
+  };
+
   return (
     <>
       <Container header={<Header variant="h2">Database configuration</Header>}>
-        {/* <KeyValuePairs
-      columns={4}
-      items={[
-        {
-          label: 'Engine',
-          value: 'Oracle Enterprise Edition 12.1.0.2.v7',
-        },
-        {
-          label: 'DB instance class',
-          value: 'db.t2.large',
-        },
-        {
-          label: 'DB instance status',
-          value: <StatusIndicator type="success">Available</StatusIndicator>,
-        },
-        {
-          label: 'Pending maintenance',
-          value: 'None',
-        },
-      ]}
-    /> */}
         <p>
           This demo uses{" "}
           <Link href="https://www.npmjs.com/package/sql.js" external>
@@ -59,19 +52,40 @@ function DatabaseConfig() {
           The database can be download and explored with and SQLite explorers
         </p>
         <Button onClick={handleDbDownload}>Download database</Button>
-        <br />
+        {/* <br />
         <br />
         The demo starts with seed data which can be restored at any point
         <br />
-        <Button onClick={handleDbDownload}>Restore seed data</Button>
+        <Button onClick={handleDbDownload}>Restore seed data</Button> */}
         <br />
         <br />
-        Reseting the database to an empty state is also possible.
+        Reseting the database to the initial state is also possible.
         <br />
-        This will empty all tables and restore the users tables to the seed
-        data(user "admin", password "admin")
+        This will empty all tables and restore the <b>Users</b> tables to the
+        default user.
         <br />
-        <Button onClick={handleDbDownload}>Reset data</Button>
+        <Button onClick={() => setVisibleModal(true)}>Reset data</Button>
+        <Modal
+          onDismiss={() => setVisibleModal(false)}
+          visible={visibleModal}
+          footer={
+            <Box float="right">
+              <SpaceBetween direction="horizontal" size="xs">
+                <Button variant="link" onClick={() => setVisibleModal(false)}>
+                  Cancel
+                </Button>
+                <Button variant="primary" onClick={handleDbResetConfirmation}>
+                  Ok
+                </Button>
+              </SpaceBetween>
+            </Box>
+          }
+          header="Reset data"
+        >
+          This operation is cannot be undone.
+          <br />
+          Are you sure you want to reset all data?
+        </Modal>
       </Container>
     </>
   );

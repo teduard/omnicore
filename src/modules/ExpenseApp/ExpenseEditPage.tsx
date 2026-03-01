@@ -32,19 +32,8 @@ function ExpenseEditPage() {
   const [selectedOption, setSelectedOption] = useState({ label: "", value: 0 });
   const [categories, setCategories] = useState([]);
 
-  const [flashbarVisible, setFlashbarVisible] = React.useState(false);
-  const [errorMsg, setErrorMsg] = useState("")
-
-  const [flashbarItems, setFlashbarItems] = useState([
-    {
-      type: "info",
-      dismissible: true,
-      dismissLabel: "Dismiss message",
-      onDismiss: () => setFlashbarItems([]),
-      content: <>An error occurred while trying to add your expense item.{errorMsg}</>,
-      id: "added_expense",
-    },
-  ]);
+  const [flashbarVisible, setFlashbarVisible] = useState(false);
+  const [errorMsg, setErrorMsg] = useState("");
 
   // Pre-populate form when expense data arrives
   useEffect(() => {
@@ -95,10 +84,10 @@ function ExpenseEditPage() {
           navigate(-1); // go back to the table
         },
         onError: (err) => {
-            setFlashbarVisible(true);
-            setErrorMsg(JSON.stringify(err));
-            logger.error("Failed to update expense:", err);
-        }
+          setFlashbarVisible(true);
+          setErrorMsg(JSON.stringify(err));
+          logger.error("Failed to update expense:", err);
+        },
       },
     );
   };
@@ -108,7 +97,25 @@ function ExpenseEditPage() {
 
   return (
     <SpaceBetween direction="vertical" size="l">
-      {flashbarVisible && <Flashbar items={flashbarItems} />}
+      {flashbarVisible && (
+        <Flashbar
+          items={[
+            {
+              type: "info",
+              dismissible: true,
+              dismissLabel: "Dismiss message",
+              onDismiss: () => setFlashbarVisible(false),
+              content: (
+                <>
+                  An error occurred while trying to add your expense item.
+                  {errorMsg}
+                </>
+              ),
+              id: "added_expense",
+            },
+          ]}
+        />
+      )}
       <form onSubmit={handleSubmit}>
         <Form
           actions={

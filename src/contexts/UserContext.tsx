@@ -1,9 +1,5 @@
-import {
-  createContext,
-  useState,
-  useEffect,
-  type ReactNode,
-} from "react";
+import {z} from "zod"
+import { createContext, useState, useEffect, type ReactNode } from "react";
 import {
   applyDensity,
   applyMode,
@@ -59,21 +55,49 @@ interface IUserProviderProps {
   children: ReactNode;
 }
 
+const defaultUser = {
+    "UserId": 1,
+    "FirstName": "John",
+    "LastName": "Doe",
+    "Email": "john.doe@gmail.com",
+    "Town": "New York",
+    "Phone": "(213) 555-1234"
+}
+
+const UserInfoSchema = z.object({
+  UserId: z.number(),
+  FirstName: z.string(),
+  LastName: z.string(),
+  Email: z.string(),
+  Town: z.string(),
+  Phone: z.string(),
+})
+
+//type UserInfoType = z.infer<typeof UserInfoSchema>;
+
 const UserProvider = ({ children }: IUserProviderProps) => {
   const localTheme = localStorage.getItem("SessionTheme");
   const localCurrency = localStorage.getItem("SessionCurrency");
   const localLayout = localStorage.getItem("SessionLayout");
-  const user = JSON.parse(localStorage.getItem("SessionUser"));
+  
+  const rawUserData = localStorage.getItem("SessionUser");
+  let user = defaultUser;
+
+  try {
+    user = UserInfoSchema.parse(JSON.parse(rawUserData!));
+  } catch(e) {
+    logger.error("UserData is invalid:", e);
+  }
 
   const [defaultTheme, setDefaultTheme] = useState(
-    localTheme === "light"
+    localTheme === "dark"
       ? {
-          value: "light",
-          label: "Light",
-        }
-      : {
           value: "dark",
           label: "Dark",
+        }
+      : {
+          value: "light",
+          label: "Light",
         },
   );
   const [defaultDensity, setDefaultDensity] = useState(
@@ -122,8 +146,6 @@ const UserProvider = ({ children }: IUserProviderProps) => {
     });
   };
 
-  // needs saving to database
-  // and to localStorage
   useEffect(() => {
     if (defaultTheme.value == "light") {
       applyMode(Mode.Light);
@@ -134,8 +156,6 @@ const UserProvider = ({ children }: IUserProviderProps) => {
     }
   }, [defaultTheme]);
 
-  // needs saving to database
-  // and to localStorage
   useEffect(() => {
     if (defaultDensity.value == "normal") {
       applyDensity(Density.Comfortable);
@@ -147,8 +167,6 @@ const UserProvider = ({ children }: IUserProviderProps) => {
   }, [defaultDensity]);
 
   useEffect(() => {
-    // needs saving to database
-    // and to localStorage
     logger.debug("currency has changed in userContext");
     logger.debug(defaultCurrency);
     localStorage.setItem("SessionCurrency", JSON.stringify(defaultCurrency));
@@ -168,7 +186,7 @@ const UserProvider = ({ children }: IUserProviderProps) => {
     densityOptions,
     setDensity,
     setDefaultDensity,
-    user
+    user,
   };
 
   return <UserContext value={value}>{children}</UserContext>;

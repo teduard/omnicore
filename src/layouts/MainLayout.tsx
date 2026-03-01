@@ -93,7 +93,6 @@ function MainLayout(props: IMainLayoutProps) {
   const [toolsOpen, setToolsOpen] = useState(false);
 
   const handleBellClick = () => {
-    //markAllRead();
     setToolsOpen(!toolsOpen);
   };
 
