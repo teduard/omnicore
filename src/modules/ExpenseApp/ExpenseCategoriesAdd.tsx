@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link, SpaceBetween } from "@cloudscape-design/components";
 import Container from "@cloudscape-design/components/container";
 import Header from "@cloudscape-design/components/header";
@@ -9,9 +9,9 @@ import Form from "@cloudscape-design/components/form";
 import Button from "@cloudscape-design/components/button";
 import FormField from "@cloudscape-design/components/form-field";
 import Input from "@cloudscape-design/components/input";
-import { useDatabase } from "../../db/hooks/useDatabase.tsx";
 import Flashbar from "@cloudscape-design/components/flashbar";
 import AppBreadcrumbs from "../../components/AppBreadcrumbs.tsx";
+import { useAddCategory } from "../../hooks/useCategories";
 
 function Breadcrumbs() {
   return (
@@ -27,34 +27,51 @@ function Breadcrumbs() {
 }
 
 function Content() {
-  const { execute } = useDatabase();
   const [categoryName, setCategoryName] = React.useState("");
-
+  const { mutate: addCategory, isPending } = useAddCategory();
+  const [nameError, setNameError] = useState("");
   const [flashbarItems, setFlashBarItems] = React.useState([]);
 
   const handleForm = (e) => {
     e.preventDefault();
+    setFlashBarItems([])
+    setNameError("");
 
-    execute(`INSERT INTO Categories (user_id, name, created_date) VALUES 
-             (1, '${categoryName}', '2026/02/19')`);
+    if (!categoryName.trim()) {
+      setNameError("Category name cannot be empty");
+      return;
+    }
 
-    setFlashBarItems([{
-        type: "info",
-        dismissible: true,
-        dismissLabel: "Dismiss message",
-        onDismiss: () => setFlashBarItems([]),
-        content: (
-          <>
-            The new category <b>{categoryName}</b> was added{" "}
-            <Link color="inverted" href={`${ExpenseRoutes.path}/categories`}>
-              see all categories
-            </Link>
-            .
-          </>
-        ),
-        id: "message_1",
+    addCategory(
+      { name: categoryName.trim() },
+      {
+        onSuccess: () => {
+          setCategoryName("");
+          setFlashBarItems([
+            {
+              type: "info",
+              dismissible: true,
+              dismissLabel: "Dismiss message",
+              onDismiss: () => setFlashBarItems([]),
+              content: (
+                <>
+                  The new category <b>{categoryName}</b> was added{" "}
+                  <Link
+                    color="inverted"
+                    href={`${import.meta.env.BASE_URL}${ExpenseRoutes.path}/categories`}
+                  >
+                    see all categories
+                  </Link>
+                  .
+                </>
+              ),
+              id: "category_added",
+            },
+          ]);
+        },
+        onError: (err: Error) => setNameError(err.message),
       },
-    ]);
+    );
   };
 
   return (
@@ -66,14 +83,16 @@ function Content() {
           <Form
             actions={
               <SpaceBetween direction="horizontal" size="xs">
-                <Button variant="primary">Add</Button>
+                <Button variant="primary" loading={isPending}>
+                  Add
+                </Button>
               </SpaceBetween>
             }
             header={<Header variant="h1">Add category</Header>}
           >
             <Container>
               <SpaceBetween direction="vertical" size="l">
-                <FormField label="Name">
+                <FormField label="Name" errorText={nameError}>
                   <Input
                     value={categoryName}
                     onChange={(e) => setCategoryName(e.detail.value)}

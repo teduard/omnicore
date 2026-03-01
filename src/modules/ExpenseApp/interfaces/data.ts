@@ -88,10 +88,7 @@ export interface IExpenseCategoryAggregate {
   LoadingStatus: LoadingStateProps.Status;
 }
 
-// pie chart
 export interface IExpenseChartData {
-  // expenseAggregate: Array<IExpenseCategoryAggregateRow>,
-  // expenseTotal: number,
   LoadingStatus: LoadingStateProps.Status;
 }
 
@@ -99,4 +96,21 @@ export interface IChartDataRow {
   name: string;
   y: number;
   color: string;
+}
+
+export interface ICategoryRow {
+  categoryId: number;
+  userId: number;
+  name: string;
+  createdDate: Date;
+  expenseCount: number;
+}
+
+export interface ICategoryDbRow {
+  category_id: number;
+  user_id: number;
+  name: string;
+  created_date: Date;
+  updated_date: Date;
+  expense_count: number;
 }

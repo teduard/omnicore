@@ -1,6 +1,7 @@
 import { useDatabase } from "../db/hooks/useDatabase";
 import type {
   IAuthService,
+  ICategoryService,
   IExpenseService,
   IPreferencesService,
 } from "../services/types";
@@ -11,6 +12,7 @@ import { createRemoteExpenseService } from "../services/expense/remoteExpenseSer
 import { createLocalExpenseService } from "../services/expense/localExpenseService";
 import { createLocalPreferencesService } from "../services/preferences/localPreferencesService";
 import { createLocalAuthService } from "../services/auth/localAuthService";
+import { createLocalCategoryService } from "../services/category/localCategoryService";
 
 type DataSource = "local" | "remote";
 
@@ -20,6 +22,7 @@ export interface DataSourceContextValue {
   setSource: (source: DataSource) => void;
   preferencesService: IPreferencesService;
   authService: IAuthService;
+  categoryService: ICategoryService;
 }
 
 const DataSourceContext = createContext<DataSourceContextValue | null>(null);
@@ -31,6 +34,10 @@ const DataSourceProvider = ({ children }) => {
     STORAGE_KEYS.DATA_SOURCE,
     "local",
   );
+
+  const categoryService = useMemo(() => {
+    return createLocalCategoryService({ db, isReady, persist, execute });
+  }, [db, isReady, execute, persist]);
 
   const service = useMemo(() => {
     const DB_OBJ = {
@@ -62,7 +69,14 @@ const DataSourceProvider = ({ children }) => {
     return createLocalAuthService({ db, isReady, persist, execute });
   }, [db, isReady, execute, persist]);
 
-  const value = { service, source, setSource, preferencesService, authService };
+  const value = {
+    service,
+    source,
+    setSource,
+    preferencesService,
+    authService,
+    categoryService,
+  };
 
   return (
     <DataSourceContext.Provider value={value}>

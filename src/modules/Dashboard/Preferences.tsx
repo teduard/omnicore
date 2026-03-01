@@ -211,8 +211,8 @@ function Breadcrumbs() {
   return (
     <AppBreadcrumbs
       items={[
-        { text: "Dashboard", href: "/" + DashboardRoutes.path },
-        { text: "Preferences", href: `${DashboardRoutes.path}/preferences` },
+        { text: "Dashboard", href: import.meta.env.BASE_URL + DashboardRoutes.path },
+        { text: "Preferences", href: import.meta.env.BASE_URL + `${DashboardRoutes.path}/preferences` },
       ]}
     />
   );

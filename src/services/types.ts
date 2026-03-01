@@ -1,5 +1,25 @@
-import type { IExpenseRow } from "../modules/ExpenseApp/interfaces/data";
+import type { ICategoryRow, IExpenseRow } from "../modules/ExpenseApp/interfaces/data";
 
+// User Authentication
+export interface LoginPayload {
+  email: string;
+  password: string;
+}
+
+export interface IUserInfo {
+  UserId: number;
+  FirstName: string;
+  LastName: string;
+  Email: string;
+  Town: string;
+  Phone: string;
+}
+
+export interface IAuthService {
+  login(payload: LoginPayload): Promise<IUserInfo | null>;
+}
+
+// Expense items
 export interface NewExpensePayload {
   expenseId?: number;
   categoryId: number;
@@ -29,6 +49,7 @@ export interface IExpenseService {
   deleteExpense(payload: DeleteExpensePayload): Promise<void>;
 }
 
+// User preferences
 export interface IPreferences {
   preferencesId: number;
   userId: number;
@@ -45,20 +66,24 @@ export interface IPreferencesService {
   updatePreferences(payload: NewPreferencesPayload): Promise<void>;
 }
 
-export interface LoginPayload {
-  email: string;
-  password: string;
+// Categories
+export interface NewCategoryPayload {
+  name: string;
 }
 
-export interface IUserInfo {
-  UserId: number;
-  FirstName: string;
-  LastName: string;
-  Email: string;
-  Town: string;
-  Phone: string;
+export interface UpdateCategoryPayload {
+  categoryId: number;
+  name: string;
 }
 
-export interface IAuthService {
-  login(payload: LoginPayload): Promise<IUserInfo | null>;
+export interface DeleteCategoryPayload {
+  categoryId: number;
+}
+
+export interface ICategoryService {
+  getCategories(): Promise<ICategoryRow[]>;
+  getCategoryById(categoryId: number): Promise<ICategoryRow | null>;
+  addCategory(payload: NewCategoryPayload): Promise<void>;
+  updateCategory(payload: UpdateCategoryPayload): Promise<void>;
+  deleteCategory(payload: DeleteCategoryPayload): Promise<void>;
 }

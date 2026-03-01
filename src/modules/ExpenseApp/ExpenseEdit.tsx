@@ -1,6 +1,6 @@
 import ExpenseEditPage from "./ExpenseEditPage";
 import ExpenseLayout from "./ExpenseLayout";
-import { ExpenseRoutes } from "../../routes";
+import { DashboardRoutes, ExpenseRoutes } from "../../routes";
 import AppBreadcrumbs from "../../components/AppBreadcrumbs";
 
 function Content() {
@@ -15,8 +15,13 @@ function Breadcrumbs() {
   return (
     <AppBreadcrumbs
       items={[
-        { text: "Dashboard", href: ExpenseRoutes.path },
-        { text: "Add expense", href: `${ExpenseRoutes.path}/add` },
+        {
+          text: "Dashboard",
+          href:
+            import.meta.env.BASE_URL + `${DashboardRoutes.path}`,
+        },
+        { text: "Expense", href: import.meta.env.BASE_URL + ExpenseRoutes.path },
+        { text: "Edit expense", href: import.meta.env.BASE_URL + `${ExpenseRoutes.path}/edit` },
       ]}
     />
   );

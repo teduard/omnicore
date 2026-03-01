@@ -13,7 +13,7 @@ import Toggle from "@cloudscape-design/components/toggle";
 import Button from "@cloudscape-design/components/button";
 import SpaceBetween from "@cloudscape-design/components/space-between";
 import { logger } from "../../lib/logger";
-import { Flashbar } from "@cloudscape-design/components";
+import { Flashbar, Spinner } from "@cloudscape-design/components";
 
 function ExpenseEditPage() {
   const { expenseId } = useParams<{ expenseId: string }>();
@@ -34,6 +34,8 @@ function ExpenseEditPage() {
 
   const [flashbarVisible, setFlashbarVisible] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");
+
+  const [amountError, setAmountError] = useState("");
 
   // Pre-populate form when expense data arrives
   useEffect(() => {
@@ -66,8 +68,15 @@ function ExpenseEditPage() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+
+    setAmountError("");
+
     const amount = parseFloat(fieldAmount);
-    if (isNaN(amount) || amount <= 0) return;
+    
+    if (isNaN(amount) || amount <= 0) {
+      setAmountError("Amount cannot be empty");
+      return;
+    }
 
     editExpense(
       {
@@ -92,7 +101,7 @@ function ExpenseEditPage() {
     );
   };
 
-  if (isLoading) return <div>Loading...</div>;
+  if (isLoading) return <Spinner />;
   if (!expense) return <div>Expense not found.</div>;
 
   return (
@@ -135,7 +144,7 @@ function ExpenseEditPage() {
         >
           <Container header={<Header variant="h2">Edit expense</Header>}>
             <SpaceBetween direction="vertical" size="l">
-              <FormField label="Amount">
+              <FormField label="Amount" errorText={amountError}>
                 <Input
                   type="number"
                   value={fieldAmount}

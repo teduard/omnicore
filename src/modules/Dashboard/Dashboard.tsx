@@ -219,7 +219,7 @@ function AppContent() {
 function Breadcrumbs() {
   return (
     <AppBreadcrumbs
-      items={[{ text: "Dashboard", href: DashboardRoutes.path }]}
+      items={[{ text: "Dashboard", href: import.meta.env.BASE_URL + DashboardRoutes.path }]}
     />
   );
 }

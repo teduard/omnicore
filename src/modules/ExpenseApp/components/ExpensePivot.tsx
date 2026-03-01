@@ -19,7 +19,7 @@ function ExpensePivot(props: IExpenseCategoryAggregate) {
   {
     id: 'name',
     header: 'Category',
-    cell: item => <Link href="#">{item.name}</Link>,
+    cell: item => item.name,// <Link href="#">{item.name}</Link>,
     width: 160,
     isRowHeader: true,
   },
@@ -35,7 +35,6 @@ function ExpensePivot(props: IExpenseCategoryAggregate) {
     cell: ({ statusText, status }) => <><StatusIndicator type={status}>30%</StatusIndicator>
     {" "}/{" "}{parseFloat(statusText) * 2} {defaultCurrency.value}
     </>,
-    //width: 100,
   },
 ];
 

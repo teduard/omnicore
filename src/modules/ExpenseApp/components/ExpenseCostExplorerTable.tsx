@@ -14,6 +14,7 @@ import { logger } from "../../../lib/logger";
 
 import { type NonCancelableCustomEvent } from "@cloudscape-design/components";
 import { useDeleteExpenses } from "../../../hooks/useExpenses";
+import { DashboardRoutes, ExpenseRoutes } from "../../../routes";
 
 interface DropdownDetail {
   id: string;
@@ -80,8 +81,7 @@ function ExpenseCostExplorerTable(props: IExpenseTableData) {
           id: "entryDate",
           header: "Entry Date",
           cell: (item: IExpenseRow) => (
-            // <Link href={"/omnicore/dashboard/expense/edit/" + item.expenseId }>{item.entryDate || "-"}</Link>
-            <Link href={"/omnicore/dashboard/expense/edit/" + item.expenseId}>
+            <Link href={`${import.meta.env.BASE_URL}${ExpenseRoutes.path}/edit/${item.expenseId}`}>
               {item.entryDate || "-"}
             </Link>
           ),

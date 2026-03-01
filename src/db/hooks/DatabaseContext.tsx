@@ -75,7 +75,8 @@ const insertSeedData = (newDb) => {
                   category_id INTEGER PRIMARY KEY,
                   user_id INTEGER, 
                   name TEXT, 
-                  created_date DATE)
+                  created_date DATE,
+                  UNIQUE (user_id, name))
               `);
 
   newDb.exec(`CREATE TABLE IF NOT EXISTS 

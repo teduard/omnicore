@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { type IExpenseLayoutProps } from "./interfaces";
 import { ExpenseRoutes } from "../../routes";
 import { DatabaseProvider } from "../../db/hooks/DatabaseContext";
+import { logger } from "../../lib/logger";
 
 const queryClient = new QueryClient();
 
@@ -26,15 +27,20 @@ function Navigation() {
     <>
       <SideNavigation
         activeHref={location.pathname}
-        onFollow={(event) => {
-          // 1. Check if it's an internal link
-          if (!event.detail.external) {
-            // 2. Stop the browser from reloading the page
-            event.preventDefault();
-            // 3. Let React Router handle the URL change
-            navigate(event.detail.href);
-          }
-        }}
+         onFollow={(event) => {
+                  if (!event.detail.external) {
+                    event.preventDefault();
+                    
+                    const finalHref = event.detail.href.replace(
+                      import.meta.env.BASE_URL,
+                      "/",
+                    );
+        
+                    logger.debug("finalHref = ", finalHref);
+        
+                    navigate(finalHref);
+                  }
+                }}
         header={{
           href: "#",
           text: "Overview",
@@ -43,7 +49,7 @@ function Navigation() {
           {
             type: "link",
             text: "Summary",
-            href: `/${ExpenseRoutes.path}`,
+            href: import.meta.env.BASE_URL + `${ExpenseRoutes.path}`,
             //info: <Badge color="red">{bears}</Badge>
           },
           { type: "divider" },
@@ -54,12 +60,12 @@ function Navigation() {
               {
                 type: "link",
                 text: `All expenses`,
-                href: `/${ExpenseRoutes.path}/costlocal`,
+                href: import.meta.env.BASE_URL + `${ExpenseRoutes.path}/costlocal`,
               },
               {
                 type: "link",
                 text: `Add expense`,
-                href: `/${ExpenseRoutes.path}/addlocal`,
+                href: import.meta.env.BASE_URL + `${ExpenseRoutes.path}/addlocal`,
               },
             ],
           },
@@ -81,12 +87,12 @@ function Navigation() {
               {
                 type: "link",
                 text: `All categories`,
-                href: `/${ExpenseRoutes.path}/categories`,
+                href: import.meta.env.BASE_URL + `${ExpenseRoutes.path}/categories`,
               },
               {
                 type: "link",
                 text: `Add category`,
-                href: `/${ExpenseRoutes.path}/categories/add`,
+                href: import.meta.env.BASE_URL + `${ExpenseRoutes.path}/categories/add`,
               },
             ],
           },

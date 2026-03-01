@@ -27,17 +27,8 @@ function Navigation() {
       <SideNavigation
         activeHref={location.pathname}
         onFollow={(event) => {
-          // 1. Check if it's an internal link
           if (!event.detail.external) {
-            // 2. Stop the browser from reloading the page
             event.preventDefault();
-            // 3. Let React Router handle the URL change
-
-            logger.debug("event.detail.href = ", event.detail.href);
-            logger.debug(
-              "final:",
-              new URL(import.meta.url).origin + event.detail.href,
-            );
 
             const finalHref = event.detail.href.replace(
               import.meta.env.BASE_URL,

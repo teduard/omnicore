@@ -7,6 +7,7 @@ import Link from "@cloudscape-design/components/link";
 import type { IExpenseTableData, IExpenseRow } from "../interfaces/data";
 import { useContext } from "react";
 import { UserContext } from "../../../contexts/UserContext";
+import ExpenseRoutes from "../../../routes/ExpenseRoutes";
 
 function ExpenseTable(props: IExpenseTableData) {
   const userContext = useContext(UserContext);
@@ -24,7 +25,7 @@ function ExpenseTable(props: IExpenseTableData) {
           id: "entryDate",
           header: "Entry Date",
           cell: (item: IExpenseRow) => (
-            <Link href={"/expense/edit/" + item.expenseId}>
+            <Link href={`${import.meta.env.BASE_URL}${ExpenseRoutes.path}/edit/${item.expenseId}`}>
               {item.entryDate || "-"}
             </Link>
           ),

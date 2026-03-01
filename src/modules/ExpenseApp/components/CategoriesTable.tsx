@@ -13,83 +13,41 @@ import { Icon } from "@cloudscape-design/components";
 import { AuthContext } from "../../../contexts/AuthContext.tsx";
 import { logger } from "../../../lib/logger.ts";
 import { type NonCancelableCustomEvent } from "@cloudscape-design/components";
+import { useCategories, useDeleteCategory } from "../../../hooks/useCategories";
 
 interface DropdownDetail {
   id: string;
 }
 
-interface CategoryItem {
-  category_id: number;
-  user_id: number;
-  name: string;
-  expense_count: number;
-  created_date: string;
-}
-
 function CategoriesTable() {
   const authContext = useContext(AuthContext);
-   if (!authContext) {
+  if (!authContext) {
     throw new Error("useAuth must be used within AuthProvider");
   }
-  const { user } = authContext;
-  const { execute, isReady } = useDatabase();
+  
   const navigate = useNavigate();
 
-  const empty: Array<CategoryItem> = [];
-
-  const [items, setItems] = React.useState<Array<CategoryItem>>(empty);
-
-  const fetchCat = () => {
-    const catData: Array<CategoryItem> = new Array<CategoryItem>();
-
-    const res = execute(`
-       select c.*, count(e.expense_id) as expense_count from Categories c
-left join Expenses e
-on c.user_id = e.user_id and c.category_id = e.category_id
-where c.user_id =${user.UserId}
-group by c.category_id
-      
-      `);
-
-    if (!res || res.length === 0) {
-      logger.debug("no categories");
-    } else {
-      res[0].values.map((row) => {
-        catData.push({
-          category_id: row[0],
-          user_id: row[1],
-          name: row[2],
-          created_date: row[3],
-          expense_count: row[4],
-        });
-      });
-      setItems(catData);
-    }
-  };
-
-  useEffect(() => {
-    if (isReady) {
-      fetchCat();
-    }
-  }, [isReady]);
+  const { data: categories = [], refetch } = useCategories();
+  const { mutate: deleteCategory } = useDeleteCategory();
 
   const [selectedItems, setSelectedItems] = React.useState([]);
 
-  const handleDropdownClick = (event: NonCancelableCustomEvent<DropdownDetail>) => {
+  const handleDropdownClick = (
+    event: NonCancelableCustomEvent<DropdownDetail>,
+  ) => {
     console.info(event);
     const actionId = event.detail.id;
+    if (!selectedItems.length) return;
 
     switch (actionId) {
       case "edit":
-        logger.debug("edit category");
+        navigate(
+          `/${ExpenseRoutes.path}/categories/edit/${selectedItems[0].categoryId}`,
+        );
         break;
       case "delete":
-        execute(
-          `DELETE FROM Categories where category_id = '${selectedItems[0].category_id}'`,
-        );
-        fetchCat();
-        break;
-      default:
+        deleteCategory({ categoryId: selectedItems[0].categoryId });
+        setSelectedItems([]);
         break;
     }
   };
@@ -119,12 +77,12 @@ group by c.category_id
           {
             id: "value",
             header: "Creation date",
-            cell: (e) => e.created_date,
+            cell: (e) => e.createdDate,
           },
           {
             id: "description",
             header: "Number of expenses",
-            cell: (e) => e.expense_count,
+            cell: (e) => e.expenseCount,
           },
         ]}
         columnDisplay={[
@@ -134,7 +92,8 @@ group by c.category_id
           { id: "description", visible: true },
         ]}
         enableKeyboardNavigation
-        items={items}
+        //items={items}
+        items={categories}
         loadingText="Loading categories"
         selectionType="single"
         trackBy="name"
@@ -154,8 +113,8 @@ group by c.category_id
           <Header
             counter={
               selectedItems.length
-                ? "(" + selectedItems.length + `/${items.length})`
-                : `(${items.length})`
+                ? "(" + selectedItems.length + `/${categories.length})`
+                : `(${categories.length})`
             }
             actions={
               <SpaceBetween direction="horizontal" size="xs">
@@ -173,7 +132,7 @@ group by c.category_id
                       disabled:
                         selectedItems &&
                         selectedItems[0] &&
-                        selectedItems[0].expense_count == 0
+                        selectedItems[0].expenseCount == 0
                           ? false
                           : true,
                     },
@@ -189,7 +148,7 @@ group by c.category_id
                 >
                   Add category
                 </Button>
-                <Button onClick={fetchCat}>
+                <Button onClick={refetch}>
                   {" "}
                   <Icon name="refresh" />
                 </Button>
