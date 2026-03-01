@@ -1,22 +1,14 @@
 import { createContext, useState, useEffect, type ReactNode } from "react";
 import { logger } from "../lib/logger";
-
-interface IUserInfo {
-  UserId: number;
-  FirstName: string;
-  LastName: string;
-  Email: string;
-  Town: string;
-  Phone: string;
-}
+import { type IUserInfo } from "../services/types";
 
 interface AuthContextValue {
   user: IUserInfo;
-  setUser: (source: IUserInfo) => void
+  setUser: (source: IUserInfo) => void;
   isAuthenticated: boolean;
   setIsAuthenticated: (source: boolean) => void;
   logout: () => void;
-  login: (userInfo:IUserInfo) => void;
+  login: (userInfo: IUserInfo) => void;
 }
 
 interface IAuthProviderProps {
@@ -42,7 +34,7 @@ async function setSessionAtomic(isAuth: boolean, userData: IUserInfo) {
   });
 }
 
-const AuthProvider = ( {children}: IAuthProviderProps) => {
+const AuthProvider = ({ children }: IAuthProviderProps) => {
   const [isAuthenticated, setIsAuthenticated] = useState(
     localStorage.getItem("SessionIsAuthenticated") === "true" || false,
   );

@@ -44,3 +44,21 @@ export interface IPreferencesService {
   getPreferences(): Promise<IPreferences | null>;
   updatePreferences(payload: NewPreferencesPayload): Promise<void>;
 }
+
+export interface LoginPayload {
+  email: string;
+  password: string;
+}
+
+export interface IUserInfo {
+  UserId: number;
+  FirstName: string;
+  LastName: string;
+  Email: string;
+  Town: string;
+  Phone: string;
+}
+
+export interface IAuthService {
+  login(payload: LoginPayload): Promise<IUserInfo | null>;
+}

@@ -9,21 +9,10 @@ import Input from "@cloudscape-design/components/input";
 import { Box } from "@cloudscape-design/components";
 import { useState } from "react";
 import Flashbar from "@cloudscape-design/components/flashbar";
-
-import { useContext } from "react";
-import { AuthContext } from "../contexts/AuthContext";
-import { useDatabase } from "../db/hooks/useDatabase";
-import { logger } from "../lib/logger";
-import { getCurrentYearMonthDay } from "../lib/dateUtils";
+import { useLogin } from "../hooks/useAuth";
 
 function LoginForm() {
-  const authContext = useContext(AuthContext);
-   if (!authContext) {
-    throw new Error("useAuth must be used within AuthProvider");
-  }
-  const { setIsAuthenticated, setUser } = authContext;
-
-  const { execute } = useDatabase();
+  const { mutate: login } = useLogin();
 
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -34,51 +23,15 @@ function LoginForm() {
   };
 
   const handleForm = () => {
-    const cur = new Date();
-    const f = getCurrentYearMonthDay(cur);
-
-    const prev = new Date(cur);
-    prev.setDate(cur.getDate() - 1)
-    const fprev = getCurrentYearMonthDay(prev);
-    console.log("F = ", f);
-    console.log("Fpref = ", fprev);
-
-    const sql = `SELECT user_id, first_name, last_name, email, town, phone
-      from Users
-      where 
-      email = '${username}'
-      and password_hash = '${password}'
-    `;
-
-    logger.debug("SQL:", sql);
-
-    const res = execute(sql);
-
-    logger.debug("RES:", res);
-    if (res && res[0] && res[0].values) {
-      logger.debug("user exists");
-      const data = res[0].values[0];
-
-      const userData = {
-        UserId: data[0],
-        FirstName: data[1],
-        LastName: data[2],
-        Email: data[3],
-        Town: data[4],
-        Phone: data[5],
-      };
-
-      setUser(userData);
-      setIsAuthenticated(true);
-
-      logger.debug("USER:", userData);
-    } else {
-      logger.debug("incorrect credentials");
-
-      setItems([demoFlashMsg, errorFlashMsg]);
-
-      setIsAuthenticated(false);
-    }
+    login(
+      { email: username, password },
+      {
+        onSuccess: (user) => {
+          if (!user) setItems([demoFlashMsg, errorFlashMsg]); // valid query, wrong credentials
+        },
+        onError: () => setItems([demoFlashMsg, errorFlashMsg]), // db error
+      },
+    );
   };
 
   const demoFlashMsg = {

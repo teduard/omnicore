@@ -1,11 +1,16 @@
 import { useDatabase } from "../db/hooks/useDatabase";
-import type { IExpenseService, IPreferencesService } from "../services/types";
+import type {
+  IAuthService,
+  IExpenseService,
+  IPreferencesService,
+} from "../services/types";
 import useLocalStorage from "../hooks/useLocalStorage";
 import { STORAGE_KEYS } from "../lib/storageKeys";
 import { createContext, useMemo } from "react";
 import { createRemoteExpenseService } from "../services/expense/remoteExpenseService";
 import { createLocalExpenseService } from "../services/expense/localExpenseService";
 import { createLocalPreferencesService } from "../services/preferences/localPreferencesService";
+import { createLocalAuthService } from "../services/auth/localAuthService";
 
 type DataSource = "local" | "remote";
 
@@ -14,6 +19,7 @@ export interface DataSourceContextValue {
   source: DataSource;
   setSource: (source: DataSource) => void;
   preferencesService: IPreferencesService;
+  authService: IAuthService;
 }
 
 const DataSourceContext = createContext<DataSourceContextValue | null>(null);
@@ -49,14 +55,14 @@ const DataSourceProvider = ({ children }) => {
       execute: execute,
     };
 
-    //if(source == "local") {
     return createLocalPreferencesService(DB_OBJ);
-    //}
-
-    //return createRemoteExpenseService(import.meta.env.VITE_API_URL);
   }, [source, db, isReady, execute, persist]);
 
-  const value = { service, source, setSource, preferencesService };
+  const authService = useMemo(() => {
+    return createLocalAuthService({ db, isReady, persist, execute });
+  }, [db, isReady, execute, persist]);
+
+  const value = { service, source, setSource, preferencesService, authService };
 
   return (
     <DataSourceContext.Provider value={value}>
