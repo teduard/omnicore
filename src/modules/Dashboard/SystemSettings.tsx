@@ -102,8 +102,14 @@ function AiConfig() {
   const { isReady } = useDatabase();
   const [checked, setChecked] = React.useState(false);
   const { preferencesService } = useContext(DataSourceContext);
-  const { isEnabled, enable, disable, loadingState, loadingProgress } =
-    useWebLLM();
+  const {
+    isEnabled,
+    enable,
+    disable,
+    loadingState,
+    loadingProgress,
+    isMobile,
+  } = useWebLLM();
   const [prefId, setPrefId] = useState<number | null>(null);
 
   useEffect(() => {
@@ -140,13 +146,22 @@ function AiConfig() {
   return (
     <>
       <Container header={<Header variant="h2">AI configuration</Header>}>
-        <Alert type="warning" header="Known issues/limitations">
-          Enabling this setting will make possible the in-browser inference through the <Link external href="https://webllm.mlc.ai/">WebLLM</Link> project.
-          <br/>
-          This will download just once and cache locally the <i>SmolLM2-135M-Instruct-q0f32-MLC</i> model (aprox 280MB)
-          <br/>
-          Once the model has completely loaded, the <b>AI Expense Assistant</b> will become visible in the Expense dashboard.
-        </Alert>
+        {!isMobile() && <Alert type="warning" header="Known issues/limitations">
+            Enabling this setting will make possible the in-browser inference
+            through the{" "}
+            <Link external href="https://webllm.mlc.ai/">
+              WebLLM
+            </Link>{" "}
+            project.
+            <br />
+            This will download just once and cache locally the{" "}
+            <i>SmolLM2-135M-Instruct-q0f32-MLC</i> model (aprox 280MB)
+            <br />
+            Once the model has completely loaded, the{" "}
+            <b>AI Expense Assistant</b> will become visible in the Expense
+            dashboard.
+          </Alert>
+        }
         <KeyValuePairs
           columns={2}
           items={[
@@ -169,32 +184,37 @@ function AiConfig() {
               label: "WebLLM",
               value: (
                 <SpaceBetween size="xs">
-                  <div></div>
-                  <Toggle
-                    onChange={({ detail }) =>
-                      handleWebLLMToggle(detail.checked)
-                    }
-                    checked={isEnabled}
-                    disabled={loadingState === "loading"}
-                  >
-                    {loadingState === "loading"
-                      ? "Loading model..."
-                      : "Enabled"}
-                  </Toggle>
-                  {loadingState === "loading" && (
-                    <Box color="text-body-secondary" fontSize="body-s">
-                      {loadingProgress}
-                    </Box>
-                  )}
-                  {loadingState === "error" && (
-                    <StatusIndicator type="error">
-                      Failed to load model
-                    </StatusIndicator>
-                  )}
-                  {loadingState === "ready" && (
-                    <StatusIndicator type="success">
-                      Model ready
-                    </StatusIndicator>
+                  {isMobile() && <>Not available on mobile</>}
+                  {!isMobile() && (
+                    <>
+                      <Toggle
+                        onChange={({ detail }) =>
+                          handleWebLLMToggle(detail.checked)
+                        }
+                        checked={isEnabled}
+                        disabled={loadingState === "loading"}
+                      >
+                        {loadingState === "loading"
+                          ? "Loading model..."
+                          : "Enabled"}
+                      </Toggle>
+
+                      {loadingState === "loading" && (
+                        <Box color="text-body-secondary" fontSize="body-s">
+                          {loadingProgress}
+                        </Box>
+                      )}
+                      {loadingState === "error" && (
+                        <StatusIndicator type="error">
+                          Failed to load model
+                        </StatusIndicator>
+                      )}
+                      {loadingState === "ready" && (
+                        <StatusIndicator type="success">
+                          Model ready
+                        </StatusIndicator>
+                      )}
+                    </>
                   )}
                 </SpaceBetween>
               ),

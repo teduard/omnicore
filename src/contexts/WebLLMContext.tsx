@@ -19,12 +19,13 @@ interface IWebLLMContextValue {
   enable: () => Promise<void>;
   disable: () => void;
   ask: (question: string, context: string) => Promise<string>;
+  isMobile: () => boolean;
 }
 
 const WebLLMContext = createContext<IWebLLMContextValue | null>(null);
 
-//const MODEL = "SmolLM2-135M-Instruct-q0f32-MLC";
-const MODEL = "SmolLM2-135M-Instruct-q0f16-MLC";
+const MODEL = "SmolLM2-135M-Instruct-q0f32-MLC";
+//const MODEL = "SmolLM2-135M-Instruct-q0f16-MLC";
 //const MODEL = "Llama-3.2-1B-Instruct-q4f32_1-MLC";
 
 const SYSTEM_PROMPT = `You are a data-driven financial coach analysing a user's personal expense data.
@@ -136,9 +137,18 @@ export const WebLLMProvider = ({ children }: { children: ReactNode }) => {
     [engine, loadingState],
   );
 
+  const isMobile = (): boolean => {
+    const isMobile = /Android|iPhone|iPad|iPod|Mobile/i.test(
+      navigator.userAgent,
+    );
+    if (isMobile) return true;
+
+    return false;
+  }
+
   return (
     <WebLLMContext.Provider
-      value={{ loadingState, loadingProgress, isEnabled, enable, disable, ask }}
+      value={{ loadingState, loadingProgress, isEnabled, enable, disable, ask, isMobile }}
     >
       {children}
     </WebLLMContext.Provider>

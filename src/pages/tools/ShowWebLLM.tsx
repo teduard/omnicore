@@ -59,7 +59,7 @@ function buildExpenseContext(
 }
 
 function ShowWebLLM() {
-  const { loadingState, loadingProgress, isEnabled, ask } = useWebLLM();
+  const { loadingState, loadingProgress, isEnabled, ask, isMobile } = useWebLLM();
   const { selectedDate } = useExpenseStore();
   const { data: expenses = [] } = useExpenses(selectedDate);
   const { defaultCurrency } = useContext(UserContext);
@@ -85,6 +85,10 @@ function ShowWebLLM() {
       setAsking(false);
     }
   };
+
+  if(isMobile()) {
+    return <></>
+  }
 
   // Not enabled yet
   if (!isEnabled) {
@@ -117,7 +121,7 @@ function ShowWebLLM() {
   return (
     <Container
       header={
-        <Header variant="h2">Expense AI Assistant - {selectedDate}</Header>
+        <Header variant="h2">Expense AI Assistant</Header>
       }
     >
       <SpaceBetween size="m">

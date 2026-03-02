@@ -203,6 +203,7 @@ const queryClient = useQueryClient();
         gridDefinition={[
           { colspan: { default: 12 } },
           { colspan: { default: 12 } },
+          { colspan: { default: 12 } },
         ]}
       >
         <Container header={<Header variant="h1">Current status</Header>}>
