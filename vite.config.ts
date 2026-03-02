@@ -18,7 +18,7 @@ const pwaOptions: Partial<VitePWAOptions> = {
         workbox: {
           clientsClaim: true,
           skipWaiting: true,
-          maximumFileSizeToCacheInBytes: 3000000
+          maximumFileSizeToCacheInBytes: 8000000
         },
         manifest: {
           start_url: `${base}/?mode=standalone`,
