@@ -66,7 +66,6 @@ const insertSeedData = (newDb) => {
               (preferences_id, user_id, theme, layout_density, currency, embeddings, webllm, created_date, updated_date) VALUES 
               (1,1,"light","normal","USD",false, false, '${curDayFormat}', '${curDayFormat}')`);
 
-  // init db tables
   newDb.exec(`CREATE TABLE IF NOT EXISTS 
               Categories (
                   category_id INTEGER PRIMARY KEY,

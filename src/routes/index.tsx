@@ -15,7 +15,6 @@ import Docs from '../pages/Docs'
 import SQL from '../pages/tools/SQL'
 import RPDF from '../pages/tools/RPDF'
 import ShowWebLLM from '../pages/tools/ShowWebLLM.tsx'
-import Pop from '../pages/tools/Pop'
 
 import AppLauncher from '../components/AppLauncher'
 
@@ -39,10 +38,6 @@ const AppRoutes = [
     {
         path: '/docs',
         element: <Docs />
-    },
-    {
-        path: '/pop',
-        element: <Pop />
     },
     {
         path: '/toolssql',

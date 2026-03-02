@@ -3,6 +3,7 @@ import { useState } from "react";
 import Grid from "@cloudscape-design/components/grid";
 import { useExpenseStore } from "../../hooks/index";
 import { useQueryClient } from '@tanstack/react-query';
+import { useExpenseReport } from '../../hooks/useExpenseReport';
 import {
   Button,
   ProgressBar,
@@ -37,6 +38,17 @@ function Content() {
   const { data: new_expenses = [], isLoading, isStale, refetch, status } = useExpenses(selectedDate);
   const [expenses, setExpenses] = React.useState(new Array<any>());
 
+  const { download, isGenerating } = useExpenseReport();
+
+  const handleDownloadReport = () => {
+    download({
+      expenses: new_expenses,       // the raw IExpenseRow[] from useExpenses
+      categoryAggregate: expenseCategoryAggregate.expenseAggregate,
+      total: expenseCategoryAggregate.expenseTotal,
+      month: selectedDate,
+    });
+  };
+
   // days in month
   useEffect(() => {
     const currentDate = new Date();
@@ -66,6 +78,7 @@ function Content() {
       setNumericMonthProgress(progress);
     } else {
       // show complete month
+      // need to handle the case were we are in the future
       setMonthProgress("This month has passed");
       setNumericMonthProgress(100);
     }
@@ -214,10 +227,15 @@ const queryClient = useQueryClient();
 
             <SpaceBetween direction="vertical" size="l">
               <MonthPicker onRefresh={updateExpenseHandler} />
-              {/* <Button variant="primary" onClick={handleStatus}>
-                <Icon name="download" /> PDF Report
-              </Button> */}
-              {/* <RPDF content={<Badge color="severity-low">Food</Badge>}/> */}
+              <Button
+                variant="primary"
+                iconName="download"
+                onClick={handleDownloadReport}
+                loading={isGenerating}
+                disabled={new_expenses.length === 0}
+              >
+                Download PDF Report
+              </Button>
             </SpaceBetween>
           </Grid>
         </Container>

@@ -147,7 +147,7 @@ function ShowWebLLM() {
             header="Context"
             size="large"
             content={<>
-              Your questions will be asked using the context formed by the summary of your expense:<br/>
+              Your questions will be asked using the context represented by the summary of your expense:<br/>
               <pre style={{"overflow":"scroll"}}>{buildExpenseContext(expenses, defaultCurrency.value)}</pre>
             </>}
           >

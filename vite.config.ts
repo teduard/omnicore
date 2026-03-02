@@ -72,7 +72,8 @@ export default defineConfig({
     rollupOptions: {
       output: {
         manualChunks: {
-          webllm: ["@mlc-ai/web-llm"],
+          'webllm': ["@mlc-ai/web-llm"],
+          'react-pdf': ['@react-pdf/renderer'],
         },
       },
     },
