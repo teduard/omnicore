@@ -1,4 +1,4 @@
-import {z} from "zod"
+import { z } from "zod";
 import { createContext, useState, useEffect, type ReactNode } from "react";
 import {
   applyDensity,
@@ -7,6 +7,7 @@ import {
   Mode,
 } from "@cloudscape-design/global-styles";
 import { logger } from "../lib/logger";
+import { UserInfoSchema } from "../services/types";
 
 const UserContext = createContext(null);
 
@@ -56,38 +57,32 @@ interface IUserProviderProps {
 }
 
 const defaultUser = {
-    "UserId": 1,
-    "FirstName": "John",
-    "LastName": "Doe",
-    "Email": "john.doe@gmail.com",
-    "Town": "New York",
-    "Phone": "(213) 555-1234"
-}
-
-const UserInfoSchema = z.object({
-  UserId: z.number(),
-  FirstName: z.string(),
-  LastName: z.string(),
-  Email: z.string(),
-  Town: z.string(),
-  Phone: z.string(),
-})
-
-//type UserInfoType = z.infer<typeof UserInfoSchema>;
+  UserId: 1,
+  FirstName: "John",
+  LastName: "Doe",
+  Email: "john.doe@gmail.com",
+  Town: "New York",
+  Phone: "(213) 555-1234",
+};
 
 const UserProvider = ({ children }: IUserProviderProps) => {
+  const localSessionWebllm = localStorage.getItem("SessionWebllm");
   const localTheme = localStorage.getItem("SessionTheme");
   const localCurrency = localStorage.getItem("SessionCurrency");
   const localLayout = localStorage.getItem("SessionLayout");
-  
+
   const rawUserData = localStorage.getItem("SessionUser");
   let user = defaultUser;
 
   try {
     user = UserInfoSchema.parse(JSON.parse(rawUserData!));
-  } catch(e) {
+  } catch (e) {
     logger.error("UserData is invalid:", e);
   }
+
+  const [sessionWebllm, setSessionWebllm] = useState(
+    localSessionWebllm == "true" ? true : false,
+  );
 
   const [defaultTheme, setDefaultTheme] = useState(
     localTheme === "dark"
@@ -172,6 +167,19 @@ const UserProvider = ({ children }: IUserProviderProps) => {
     localStorage.setItem("SessionCurrency", JSON.stringify(defaultCurrency));
   }, [defaultCurrency]);
 
+  useEffect(() => {
+    const handleStorageChange = async (event: StorageEvent) => {
+      logger.debug("storage changed:", event)
+      if (event.key == "SessionWebllm") {
+        logger.debug("SessionWebllm event picked up: ", event);
+      }
+
+      window.addEventListener("storage", handleStorageChange);
+
+      return () => window.removeEventListener("storage", handleStorageChange);
+    };
+  }, []);
+
   const value = {
     defaultTheme,
     themeOptions,
@@ -187,6 +195,8 @@ const UserProvider = ({ children }: IUserProviderProps) => {
     setDensity,
     setDefaultDensity,
     user,
+    sessionWebllm,
+    setSessionWebllm,
   };
 
   return <UserContext value={value}>{children}</UserContext>;

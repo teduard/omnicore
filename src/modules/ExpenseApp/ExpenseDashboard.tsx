@@ -27,6 +27,7 @@ import ExpenseTable from "./components/ExpenseTable.tsx";
 import { EXPENSE_KEYS, useExpenses } from "../../hooks/useExpenses.ts";
 import { logger } from "../../lib/logger.ts";
 import AppBreadcrumbs from "../../components/AppBreadcrumbs.tsx";
+import ShowWebLLM from "../../pages/tools/ShowWebLLM.tsx";
 
 function Content() {
   const { selectedDate } = useExpenseStore();
@@ -220,6 +221,8 @@ const queryClient = useQueryClient();
             </SpaceBetween>
           </Grid>
         </Container>
+
+                <ShowWebLLM/>
 
         <Grid
           gridDefinition={[

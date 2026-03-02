@@ -8,6 +8,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 const queryClient = new QueryClient();
 
 import { useCrossTabInvalidation } from "../hooks/useCrossTabInvalidation";
+import { WebLLMProvider } from "../contexts/WebLLMContext";
 
 function CrossTabSync() {
   useCrossTabInvalidation();
@@ -21,8 +22,10 @@ export const AppProviders = ({ children }: { children: ReactNode }) => (
         <UserProvider>
           <DataSourceProvider>
             <QueryClientProvider client={queryClient}>
-              <CrossTabSync />
-              {children}
+              <WebLLMProvider>
+                <CrossTabSync />
+                {children}
+              </WebLLMProvider>
             </QueryClientProvider>
           </DataSourceProvider>
         </UserProvider>

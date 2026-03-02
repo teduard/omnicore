@@ -26,27 +26,6 @@ function DatabaseConfig() {
   return (
     <>
       <Container header={<Header variant="h2">Database configuration</Header>}>
-        {/* <KeyValuePairs
-      columns={4}
-      items={[
-        {
-          label: 'Engine',
-          value: 'Oracle Enterprise Edition 12.1.0.2.v7',
-        },
-        {
-          label: 'DB instance class',
-          value: 'db.t2.large',
-        },
-        {
-          label: 'DB instance status',
-          value: <StatusIndicator type="success">Available</StatusIndicator>,
-        },
-        {
-          label: 'Pending maintenance',
-          value: 'None',
-        },
-      ]}
-    /> */}
         <p>
           This demo uses{" "}
           <Link href="https://www.npmjs.com/package/sql.js" external>
@@ -118,14 +97,6 @@ function AiConfig() {
                 </Link>
               ),
             },
-            // {
-            //   label: 'DB instance status',
-            //   value: <StatusIndicator type="success">Available</StatusIndicator>,
-            // },
-            // {
-            //   label: 'Pending maintenance',
-            //   value: 'None',
-            // },
           ]}
         />
       </Container>

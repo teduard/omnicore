@@ -1,6 +1,19 @@
-import type { ICategoryRow, IExpenseRow } from "../modules/ExpenseApp/interfaces/data";
+import type {
+  ICategoryRow,
+  IExpenseRow,
+} from "../modules/ExpenseApp/interfaces/data";
+import { z } from "zod";
 
 // User Authentication
+export const UserInfoSchema = z.object({
+  UserId: z.number(),
+  FirstName: z.string(),
+  LastName: z.string(),
+  Email: z.string(),
+  Town: z.string(),
+  Phone: z.string(),
+});
+
 export interface LoginPayload {
   email: string;
   password: string;
@@ -35,6 +48,8 @@ export interface NewPreferencesPayload {
   theme: string;
   layoutDensity: string;
   currency: string;
+  webllm: boolean;
+  embeddings: boolean;
 }
 
 export interface DeleteExpensePayload {
@@ -64,6 +79,7 @@ export interface IPreferences {
 export interface IPreferencesService {
   getPreferences(): Promise<IPreferences | null>;
   updatePreferences(payload: NewPreferencesPayload): Promise<void>;
+  isSessionReady: boolean;
 }
 
 // Categories

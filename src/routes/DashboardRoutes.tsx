@@ -1,8 +1,6 @@
 import { lazy } from "react";
 
-//Dashboard, 
-// import {Profile, Preferences, Documentation} from '../apps/Dashboard/';
-// import SystemSettings from '../apps/Dashboard/SystemSettings';
+//import SystemSettings from '../modules/Dashboard/SystemSettings';
 
 const Dashboard = lazy(() => import("../modules/Dashboard/Dashboard"));
 const Profile = lazy(() => import("../modules/Dashboard/Profile"));

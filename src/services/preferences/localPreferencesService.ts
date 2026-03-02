@@ -1,11 +1,11 @@
+import { useState } from "react";
 import { logger } from "../../lib/logger";
 import type {
   IPreferencesDbRow,
   IPreferencesRow,
 } from "../../modules/ExpenseApp/interfaces/data";
-import type { IPreferences, IPreferencesService, NewPreferencesPayload } from "../types";
+import type { IPreferencesService, NewPreferencesPayload } from "../types";
 import { dbExecute, dbQuery } from "../utils";
-//import { dbExecute, dbQuery } from "../utils";
 
 const createLocalPreferencesService = (db): IPreferencesService => {
   const getSession = () => {
@@ -49,33 +49,34 @@ const createLocalPreferencesService = (db): IPreferencesService => {
       return result;
     },
 
-    //updatePreferences(payload: NewPreferencesPayload): Promise<void>;
-
     updatePreferences: async (payload: NewPreferencesPayload) => {
-        logger.debug("payload pref = ", payload)
-        
+      logger.debug("payload pref = ", payload);
+
       const { UserId } = getSession();
-            dbExecute(
-              db.db,
-              `UPDATE Preferences
+      dbExecute(
+        db.db,
+        `UPDATE Preferences
               set 
               theme = ?,
               layout_density = ?,
-              currency = ?
+              currency = ?,
+              webllm = ?,
+              embeddings = ?
               WHERE preferences_id = ?
               and user_id = ?
               `,
-              // needs the update_date to be now
-              [
-                payload.theme,
-                payload.layoutDensity,
-                payload.currency,
-                payload.preferencesId,
-                UserId,
-              ],
-            );
-      
-            db.persist();
+        [
+          payload.theme,
+          payload.layoutDensity,
+          payload.currency,
+          payload.webllm ? 1 : 0,
+          payload.embeddings ? 1 : 0,
+          payload.preferencesId,
+          UserId,
+        ],
+      );
+
+      db.persist();
     },
   };
 };

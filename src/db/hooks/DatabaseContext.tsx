@@ -8,10 +8,7 @@ import {
 import initSqlJs from "sql.js";
 import sqliteUrl from "../../assets/sql-wasm.wasm?url";
 import { logger } from "../../lib/logger";
-import {
-  getCurrentYearMonth,
-  getCurrentYearMonthDay,
-} from "../../lib/dateUtils";
+import { getCurrentYearMonthDay } from "../../lib/dateUtils";
 
 interface IDatabaseProviderProps {
   children: ReactNode;
@@ -87,6 +84,7 @@ const insertSeedData = (newDb) => {
                   amount REAL, 
                   comment TEXT,
                   could_have_been_avoided BOOLEAN,
+                  embeddings BLOB,
                   created_date DATE,
                   updated_date DATE)
               `);
