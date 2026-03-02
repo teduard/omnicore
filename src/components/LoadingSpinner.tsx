@@ -1,4 +1,3 @@
-// src/components/Spinner.tsx
 const LoadingSpinner = () => {
   return (
     <div style={{

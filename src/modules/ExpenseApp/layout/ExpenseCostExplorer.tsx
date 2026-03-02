@@ -93,8 +93,8 @@ function Breadcrumbs() {
   return (
     <AppBreadcrumbs
       items={[
-        { text: "Dashboard", href: ExpenseRoutes.path },
-        { text: "All expenses", href: `${ExpenseRoutes.path}/cost` },
+        { text: "Dashboard", href: import.meta.env.BASE_URL + ExpenseRoutes.path },
+        { text: "All expenses", href: import.meta.env.BASE_URL + `${ExpenseRoutes.path}/cost` },
       ]}
     />
   );

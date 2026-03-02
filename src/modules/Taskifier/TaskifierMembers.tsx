@@ -126,9 +126,9 @@ function Breadcrumbs() {
   return (
     <AppBreadcrumbs
       items={[
-        { text: "Dashboard", href: DashboardRoutes.path },
-        { text: "Taskifier", href: TaskifierRoutes.path },
-        { text: "Members", href: `${TaskifierRoutes.path}/members` },
+        { text: "Dashboard", href: import.meta.env.BASE_URL + DashboardRoutes.path },
+        { text: "Taskifier", href: import.meta.env.BASE_URL + TaskifierRoutes.path },
+        { text: "Members", href: import.meta.env.BASE_URL + `${TaskifierRoutes.path}/members` },
       ]}
     />
   );

@@ -24,7 +24,7 @@ function ExpenseEditPage() {
   const { mutate: editExpense, isPending } = useEditExpense();
   const { execute, isReady } = useDatabase();
 
-  // Form state — initialised empty, populated once expense loads
+  // Form state - initialised empty, populated once expense loads
   const [fieldAmount, setFieldAmount] = useState("");
   const [fieldComment, setFieldComment] = useState("");
   const [checked, setChecked] = useState(false);

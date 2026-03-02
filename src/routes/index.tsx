@@ -40,7 +40,7 @@ const AppRoutes = [
         element: <Docs />
     },
     {
-        path: '/toolssql',
+        path: '/tools/sql',
         element: <SQL />
     },
     {

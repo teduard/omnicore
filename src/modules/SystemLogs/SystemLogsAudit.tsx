@@ -16,9 +16,9 @@ function Breadcrumbs() {
   return (
     <AppBreadcrumbs
       items={[
-        { text: "Dashboard", href: DashboardRoutes.path },
-        { text: "System", href: SystemLogsRoutes.path },
-        { text: "Audit", href: `${SystemLogsRoutes.path}/audit` },
+        { text: "Dashboard", href: import.meta.env.BASE_URL + DashboardRoutes.path },
+        { text: "System", href: import.meta.env.BASE_URL + SystemLogsRoutes.path },
+        { text: "Audit", href: import.meta.env.BASE_URL + `${SystemLogsRoutes.path}/audit` },
       ]}
     />
   );

@@ -12,9 +12,9 @@ function Breadcrumbs() {
   return (
     <AppBreadcrumbs
       items={[
-        { text: "Dashboard", href: "/dashboard" },
-        { text: "Organization", href: "/organization" },
-        { text: "Your applications", href: "/organization/applications" },
+        { text: "Dashboard", href: import.meta.env.BASE_URL + "/dashboard" },
+        { text: "Organization", href: import.meta.env.BASE_URL + "/organization" },
+        { text: "Your applications", href: import.meta.env.BASE_URL + "/organization/applications" },
       ]}
     />
   );

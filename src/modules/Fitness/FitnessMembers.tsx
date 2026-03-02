@@ -97,9 +97,9 @@ function Breadcrumbs() {
   return (
     <AppBreadcrumbs
       items={[
-        { text: "Dashboard", href: DashboardRoutes.path },
-        { text: "Fitness", href: FitnessRoutes.path },
-        { text: "Members", href: `${FitnessRoutes.path}/members` },
+        { text: "Dashboard", href: import.meta.env.BASE_URL + DashboardRoutes.path },
+        { text: "Fitness", href: import.meta.env.BASE_URL + FitnessRoutes.path },
+        { text: "Members", href: import.meta.env.BASE_URL + `${FitnessRoutes.path}/members` },
       ]}
     />
   );

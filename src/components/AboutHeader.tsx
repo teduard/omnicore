@@ -75,9 +75,9 @@ function AboutHeader() {
 
         <Grid
           gridDefinition={[
-            { colspan: { default: 4 } },
-            { colspan: { default: 4 } },
-            { colspan: { default: 4 } },
+            { colspan: { default: 12, m: 4 } },
+            { colspan: { default: 12, m: 4 } },
+            { colspan: { default: 12, m: 4 } },
           ]}
         >
           <div

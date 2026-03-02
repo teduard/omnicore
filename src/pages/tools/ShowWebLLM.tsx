@@ -11,6 +11,7 @@ import {
   StatusIndicator,
   Toggle,
   Popover,
+  Link,
 } from "@cloudscape-design/components";
 import { useWebLLM } from "../../contexts/WebLLMContext";
 import { useExpenses } from "../../hooks/useExpenses";
@@ -18,6 +19,7 @@ import { useExpenseStore } from "../../hooks/store";
 import type { IExpenseRow } from "../../modules/ExpenseApp/interfaces/data";
 import { UserContext } from "../../contexts/UserContext";
 import { logger } from "../../lib/logger";
+import { DashboardRoutes } from "../../routes";
 
 // Builds a plain-text expense summary to inject as context
 function buildExpenseContext(
@@ -95,7 +97,7 @@ function ShowWebLLM() {
     return (
       <Container header={<Header variant="h2">Expense AI Assistant</Header>}>
         <Box color="text-body-secondary">
-          WebLLM is disabled. Enable it in System Settings to use the AI
+          WebLLM is disabled. Enable it in <Link href={`${import.meta.env.BASE_URL}${DashboardRoutes.path}/system`}>System Settings</Link> to use the AI
           assistant.
         </Box>
       </Container>
